@@ -1,0 +1,17 @@
+{
+  "name": "mbe-slider",
+  "version": "2.0.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-watch": "~0.5",
+    "grunt-contrib-concat": "~0.3",
+    "grunt-contrib-uglify": "~0.5.0"
+  },
+  "description": "The ultimate responsive, super optimized, pure JS slider",
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/nikini/mbe-slider.git"
+  }
+}
