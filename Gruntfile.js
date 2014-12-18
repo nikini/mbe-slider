@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [ 'src/mbe-slider.js', 'src/helpers/*.js', 'src/class/*.js' ],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'build/<%= pkg.name %>.js'
       }
     },
     uglify: {
