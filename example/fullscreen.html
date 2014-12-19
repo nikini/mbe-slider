@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<!-- Fullscreen Slider - example made by Ciprian Mocanu -->
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="content-language" content="en" />
+
+		<title>Fullscreen - JS mbeSlider - JS Photo and HTML Slider for Your Mobile Needs</title>
+
+		<meta name="description" content="mbe slider, javascript slider, html slider, fullscreen html slider" />
+
+		<meta name="viewport" content="width=device-width" />
+
+		<!-- CSS -->
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,700" rel="stylesheet" type="text/css" />
+		<link href="css/fullscreen.css" rel="stylesheet" type="text/css" />
+		<!-- /CSS -->
+
+		<!-- Favicon -->
+		<link href="ico/favicon.ico" rel="icon" type="image/ico" />
+		<link href="ico/favicon.ico" rel="shortcut icon" type="image/ico" />
+		<link href="ico/speed-dial.png" rel="apple-touch-icon" type="image/png" />
+		<link href="ico/speed-dial.png" rel="icon" type="image/png" />
+		<link href="ico/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed" type="image/png" />
+		<!-- /Favicon -->
+	</head>
+	<body>
+
+		<ul class="mobileScroller">
+
+			<li style="background: #D9A443">
+
+				<article class="notice">
+					<h1>mbe slider</h1>
+					<p>This is a fullscreen slider made only in Javascript. This slider took <span class="duration"></span> milliseconds to initialize.</p>
+					<p><a class="btn" href="https://github.com/nikini/mbe-slider">View on GitHub</a></p>
+				</article> <!-- .notice -->
+
+			</li>
+			<li style="background: #D9BB96">&nbsp;</li>
+			<li style="background: #A6662E">&nbsp;</li>
+			<li style="background: #733924">&nbsp;</li>
+			<li style="background: #BF4B21">&nbsp;</li>
+
+		</ul> <!-- .mobileScroller -->
+
+		<!-- Javascript -->
+		<script src="../build/mbe-slider.min.js"></script>
+		<script>
+			window.onload = function () {
+
+				var timeStart = Date.now();
+				window.mSlider = new mbeSlider({
+					element: '.mobileScroller',
+					direction: 'horizontal',
+					neverSkip: true
+				});
+				var timeEnd = Date.now();
+
+				var durationObj = document.querySelector('.notice .duration');
+				durationObj.innerHTML = timeEnd - timeStart;
+			}
+		</script>
+		<!-- /Javascript -->
+
+	</body>
+</html>

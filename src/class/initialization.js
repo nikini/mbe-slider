@@ -74,8 +74,6 @@
      */
     mbeSlider.prototype.init = function () {
 
-        console.time('init #' + this.options.id);
-
         //set the main element
         this.setElement(this.options.element);
 
@@ -118,8 +116,6 @@
         if (this.options.onInit && typeof this.options.onInit === 'function') {
             this.options.onInit.call(this);
         }
-
-        console.timeEnd('init #' + this.options.id);
 
         return this;
     };

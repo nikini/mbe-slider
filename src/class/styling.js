@@ -40,6 +40,7 @@
 
         if (this.options.direction === 'horizontal') {
             slidesStyle['display'] = 'inline-block';
+            slidesStyle['vertical-align'] = 'middle';
             slidesStyle['width'] = '100%';
         } else {
             slidesStyle['display'] = 'block';
