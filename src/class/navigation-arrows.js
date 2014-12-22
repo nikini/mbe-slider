@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Append the arrows
      *
      * @return void
      */
-    mbeSlider.prototype.appendArrows = function () {
+    MbeSlider.prototype.appendArrows = function () {
 
         if (!(this.options.navigation && this.options.navigation.arrows)) {
             return;
@@ -43,7 +45,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.arrowBackClick = function (e) {
+    MbeSlider.prototype.arrowBackClick = function (e) {
 
         e.preventDefault();
 
@@ -56,7 +58,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.arrowForwardClick = function (e) {
+    MbeSlider.prototype.arrowForwardClick = function (e) {
 
         e.preventDefault();
 
@@ -69,7 +71,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.setNavigationArrows = function () {
+    MbeSlider.prototype.setNavigationArrows = function () {
 
         if (!(this.options.navigation && this.options.navigation.arrows)) {
             return;
@@ -93,4 +95,4 @@
         }
     };
 
-}());
+}(MbeSlider));

@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider, mbeHelper) {
+
+    'use strict';
 
     /**
      * Set the element to the slider
      *
      * @return string
      */
-    mbeSlider.prototype.setElement = function (element) {
+    MbeSlider.prototype.setElement = function (element) {
         if (typeof element === 'string') {
             this.element = document.querySelector(element);
         } else {
@@ -22,7 +24,7 @@
      *
      * @return string
      */
-    mbeSlider.prototype.setSlides = function () {
+    MbeSlider.prototype.setSlides = function () {
         var i;
 
         this._private.slides = [];
@@ -35,4 +37,4 @@
         }
     };
 
-}());
+}(MbeSlider, mbeHelper));

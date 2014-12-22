@@ -1,4 +1,6 @@
-(function () {
+(function (mbeHelper) {
+
+    'use strict';
 
     /**
      * Bind an event to an object
@@ -27,7 +29,7 @@
             this.bindedEvents = {};
         }
 
-        events.forEach(function (event, value) {
+        events.forEach(function (event) {
 
             if (!this.bindedEvents[event]) {
                 this.bindedEvents[event] = [];
@@ -64,7 +66,7 @@
             return;
         }
 
-        events.forEach(function (event, value) {
+        events.forEach(function (event) {
 
             var i;
 
@@ -87,4 +89,4 @@
     };
     Window.prototype.mbeUnbindEvent = Node.prototype.mbeUnbindEvent;
 
-}());
+}(mbeHelper));

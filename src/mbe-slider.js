@@ -1,7 +1,8 @@
-var mbeHelper = mbeHelper || {};
+var mbeHelper = {};
 
-var mbeSlider = (function () {
-    "use strict";
+var MbeSlider = (function () {
+
+    'use strict';
 
     /**
      * The Class
@@ -10,7 +11,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    var mbeSlider = function (options) {
+    var MbeSlider = function (options) {
 
         /**
          * Mbe Slider Options
@@ -119,6 +120,6 @@ var mbeSlider = (function () {
         this.init();
     };
 
-    return mbeSlider;
+    return MbeSlider;
 
 }());

@@ -1,4 +1,4 @@
-(function () {
+(function (mbeHelper) {
 
     'use strict';
 
@@ -45,4 +45,4 @@
         return x;
     };
 
-}());
+}(mbeHelper));

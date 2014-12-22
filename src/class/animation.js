@@ -1,4 +1,6 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Make the object animate or stop animating
@@ -8,7 +10,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.setAnimation = function (duration) {
+    MbeSlider.prototype.setAnimation = function (duration) {
 
         if (duration > 0) {
 
@@ -41,4 +43,4 @@
         }
     };
 
-}());
+}(MbeSlider));

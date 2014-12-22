@@ -1,5 +1,7 @@
 (function () {
 
+    'use strict';
+
     /**
      * Set CSS for an element
      *

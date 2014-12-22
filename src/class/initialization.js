@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Set the parent data to the node data
      *
      * @return void
      */
-    mbeSlider.prototype.setData = function () {
+    MbeSlider.prototype.setData = function () {
 
         var i;
 
@@ -21,7 +23,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.initStyle = function () {
+    MbeSlider.prototype.initStyle = function () {
         var i,
             elementStyle = this.getElementStyle(),
             slidesStyle = this.getSlidesStyle(),
@@ -41,7 +43,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.initHtml = function () {
+    MbeSlider.prototype.initHtml = function () {
         if (this.element.parentNode.classList.contains('mbe-slider')) {
             return;
         }
@@ -55,7 +57,7 @@
         wrapper.classList.add('mbe-slider');
 
         // Add the classes from the element to the wrappoer
-        Array.prototype.forEach.call(this.element.classList, function (cssClass, index) {
+        Array.prototype.forEach.call(this.element.classList, function (cssClass) {
             wrapper.classList.add(cssClass);
         }, this);
 
@@ -70,9 +72,9 @@
     /**
      * Init the Slider
      *
-     * @return mbeSlider
+     * @return MbeSlider
      */
-    mbeSlider.prototype.init = function () {
+    MbeSlider.prototype.init = function () {
 
         //set the main element
         this.setElement(this.options.element);
@@ -120,4 +122,4 @@
         return this;
     };
 
-}());
+}(MbeSlider));

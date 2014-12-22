@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Hide the slider
      *
      * @return string
      */
-    mbeSlider.prototype.hide = function () {
+    MbeSlider.prototype.hide = function () {
         this.element.parentNode.mbeSetStyle({
             'display': 'none'
         });
@@ -16,7 +18,7 @@
      *
      * @return string
      */
-    mbeSlider.prototype.show = function () {
+    MbeSlider.prototype.show = function () {
         this.element.parentNode.mbeSetStyle({
             'display': 'block'
         });
@@ -30,7 +32,7 @@
      *
      * @return function
      */
-    mbeSlider.prototype.click = function (event) {
+    MbeSlider.prototype.click = function (event) {
 
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
@@ -44,7 +46,7 @@
      *
      * @return function
      */
-    mbeSlider.prototype.resize = function () {
+    MbeSlider.prototype.resize = function () {
 
         // Set the width of the slider
         this._private.width = this.element.offsetWidth;
@@ -55,4 +57,4 @@
         return this._private.moved;
     };
 
-}());
+}(MbeSlider));

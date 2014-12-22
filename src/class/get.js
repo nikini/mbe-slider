@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Get the current axe
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentAxe = function () {
+    MbeSlider.prototype.getCurrentAxe = function () {
         return this.options.direction === 'horizontal' ? 'x' : 'y';
     };
 
@@ -14,7 +16,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentSlideIndex = function () {
+    MbeSlider.prototype.getCurrentSlideIndex = function () {
         var axe = this.getCurrentAxe();
 
         return this._private.currentSlide[axe];
@@ -25,10 +27,10 @@
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentSlide = function () {
+    MbeSlider.prototype.getCurrentSlide = function () {
         var index = this.getCurrentSlideIndex();
 
         return this._private.slides[index - 1];
     };
 
-}());
+}(MbeSlider));

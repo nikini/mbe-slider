@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Append navigation
      *
      * @return void
      */
-    mbeSlider.prototype.appendNavigation = function () {
+    MbeSlider.prototype.appendNavigation = function () {
 
         if (!(this.options.navigation && this.options.navigation.type)) {
             return;
@@ -71,7 +73,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.navigationClick = function (event) {
+    MbeSlider.prototype.navigationClick = function (event) {
         event.preventDefault();
 
         var slide = event.currentTarget.dataset.slide;
@@ -88,7 +90,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.setNavigationItem = function () {
+    MbeSlider.prototype.setNavigationItem = function () {
 
         if (!(this.options.navigation && this.options.navigation.type)) {
             return;
@@ -109,4 +111,4 @@
         });
     };
 
-}());
+}(MbeSlider));

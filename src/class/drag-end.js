@@ -1,4 +1,6 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Events On Mouse Up
@@ -7,7 +9,7 @@
      *
      * @return function
      */
-    mbeSlider.prototype.mouseUp = function (event) {
+    MbeSlider.prototype.mouseUp = function (event) {
 
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
@@ -17,7 +19,6 @@
         this._private.mousedown = false;
 
         // Momentum
-        var newX, newY;
         if (this._private.speed.x !== 0) {
             this._private.position.x += this._private.speed.x / 8 * this._private.width;
         }
@@ -34,8 +35,8 @@
             slideX = this.neverSkip(slideX + 1, 'x');
             slideY = this.neverSkip(slideY + 1, 'y');
         } else {
-            slideX ++;
-            slideY ++;
+            slideX++;
+            slideY++;
         }
 
         this.gotoSlide(slideX, slideY, this.options.animationDuration);
@@ -50,4 +51,4 @@
         return this._private.moved;
     };
 
-}());
+}(MbeSlider));

@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Init the CSS Function
      *
      * @return void
      */
-    mbeSlider.prototype.destroyStyle = function () {
+    MbeSlider.prototype.destroyStyle = function () {
         var i, j,
             elementStyle = this.getElementStyle(),
             slidesStyle = this.getSlidesStyle(),
@@ -37,7 +39,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.destroyHtml = function () {
+    MbeSlider.prototype.destroyHtml = function () {
         if (!this.element.parentNode.classList.contains('mbe-slider')) {
             return;
         }
@@ -52,7 +54,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.destroy = function () {
+    MbeSlider.prototype.destroy = function () {
 
         console.time('destroy #' + this.options.id);
 
@@ -63,4 +65,4 @@
         console.timeEnd('destroy #' + this.options.id);
     };
 
-}());
+}(MbeSlider));

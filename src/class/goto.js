@@ -1,4 +1,6 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Go to the slide "x"
@@ -9,19 +11,19 @@
      *
      * @return void
      */
-    mbeSlider.prototype.gotoSlide = function (x, y, animate) {
+    MbeSlider.prototype.gotoSlide = function (x, y, animate) {
 
-        if (typeof animate === undefined) {
+        if (typeof animate === 'undefined') {
             animate = true;
         }
 
         // Set the animation to animate
         this.setAnimation(animate === true ? this.options.slideDuration : animate || 0);
 
-        if (typeof x === undefined) {
+        if (typeof x === 'undefined') {
             x = 0;
         }
-        if (typeof y === undefined) {
+        if (typeof y === 'undefined') {
             y = 0;
         }
 
@@ -42,7 +44,7 @@
         this._private.currentSlide.x = x;
         this._private.currentSlide.y = y;
 
-        this.moveTo(- (x - 1) * this._private.width, - (y - 1) * this._private.height);
+        this.moveTo(-(x - 1) * this._private.width, -(y - 1) * this._private.height);
 
         //set the navigation item as selected
         this.setNavigationItem();
@@ -67,7 +69,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.gotoNextSlide = function (animate) {
+    MbeSlider.prototype.gotoNextSlide = function (animate) {
 
         var current = {
             x: this._private.currentSlide.x,
@@ -75,9 +77,9 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x ++;
+            current.x++;
         } else {
-            current.y ++;
+            current.y++;
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -91,7 +93,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.gotoPreviousSlide = function (animate) {
+    MbeSlider.prototype.gotoPreviousSlide = function (animate) {
 
         var current = {
             x: this._private.currentSlide.x,
@@ -99,12 +101,12 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x --;
+            current.x--;
         } else {
-            current.y --;
+            current.y--;
         }
 
         this.gotoSlide(current.x, current.y, animate);
     };
 
-}());
+}(MbeSlider));

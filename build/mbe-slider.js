@@ -1,7 +1,8 @@
-var mbeHelper = mbeHelper || {};
+var mbeHelper = {};
 
-var mbeSlider = (function () {
-    "use strict";
+var MbeSlider = (function () {
+
+    'use strict';
 
     /**
      * The Class
@@ -10,7 +11,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    var mbeSlider = function (options) {
+    var MbeSlider = function (options) {
 
         /**
          * Mbe Slider Options
@@ -119,10 +120,12 @@ var mbeSlider = (function () {
         this.init();
     };
 
-    return mbeSlider;
+    return MbeSlider;
 
 }());
 ;(function () {
+
+    'use strict';
 
     /**
      * Remove white space between tags
@@ -133,17 +136,19 @@ var mbeSlider = (function () {
      * @return
      */
     Node.prototype.mbeRmoveWhiteSpace = function () {
-        var i;
+        var i, node;
         for (i = 0; i < this.childNodes.length; i++) {
-            var node = this.childNodes[i];
-            if (node.nodeType == 3 && !/\S/.test(node.nodeValue)) {
+            node = this.childNodes[i];
+            if (node.nodeType === 3 && !/\S/.test(node.nodeValue)) {
                 this.removeChild(node);
             }
         }
     };
 
 }());
-;(function () {
+;(function (mbeHelper) {
+
+    'use strict';
 
     /**
      * Throw an mbe Slider Error
@@ -163,13 +168,15 @@ var mbeSlider = (function () {
                 'object': object || null
             },
             'toString': function () {
-                return this.name + ' > ' + this.log.function + ': ' + this.message;
+                return this.name + ' > ' + this.log['function'] + ': ' + this.message;
             }
         };
     };
 
-}());
-;(function () {
+}(mbeHelper));
+;(function (mbeHelper) {
+
+    'use strict';
 
     /**
      * Bind an event to an object
@@ -198,7 +205,7 @@ var mbeSlider = (function () {
             this.bindedEvents = {};
         }
 
-        events.forEach(function (event, value) {
+        events.forEach(function (event) {
 
             if (!this.bindedEvents[event]) {
                 this.bindedEvents[event] = [];
@@ -235,7 +242,7 @@ var mbeSlider = (function () {
             return;
         }
 
-        events.forEach(function (event, value) {
+        events.forEach(function (event) {
 
             var i;
 
@@ -258,8 +265,8 @@ var mbeSlider = (function () {
     };
     Window.prototype.mbeUnbindEvent = Node.prototype.mbeUnbindEvent;
 
-}());
-;(function () {
+}(mbeHelper));
+;(function (mbeHelper) {
 
     'use strict';
 
@@ -306,8 +313,10 @@ var mbeSlider = (function () {
         return x;
     };
 
-}());
+}(mbeHelper));
 ;(function () {
+
+    'use strict';
 
     /**
      * Set CSS for an element
@@ -354,7 +363,9 @@ var mbeSlider = (function () {
     };
 
 }());
-;(function () {
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Make the object animate or stop animating
@@ -364,7 +375,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.setAnimation = function (duration) {
+    MbeSlider.prototype.setAnimation = function (duration) {
 
         if (duration > 0) {
 
@@ -397,15 +408,17 @@ var mbeSlider = (function () {
         }
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Init the CSS Function
      *
      * @return void
      */
-    mbeSlider.prototype.destroyStyle = function () {
+    MbeSlider.prototype.destroyStyle = function () {
         var i, j,
             elementStyle = this.getElementStyle(),
             slidesStyle = this.getSlidesStyle(),
@@ -437,7 +450,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.destroyHtml = function () {
+    MbeSlider.prototype.destroyHtml = function () {
         if (!this.element.parentNode.classList.contains('mbe-slider')) {
             return;
         }
@@ -452,7 +465,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.destroy = function () {
+    MbeSlider.prototype.destroy = function () {
 
         console.time('destroy #' + this.options.id);
 
@@ -463,8 +476,10 @@ var mbeSlider = (function () {
         console.timeEnd('destroy #' + this.options.id);
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Events On Mouse Up
@@ -473,7 +488,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.mouseUp = function (event) {
+    MbeSlider.prototype.mouseUp = function (event) {
 
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
@@ -483,7 +498,6 @@ var mbeSlider = (function () {
         this._private.mousedown = false;
 
         // Momentum
-        var newX, newY;
         if (this._private.speed.x !== 0) {
             this._private.position.x += this._private.speed.x / 8 * this._private.width;
         }
@@ -500,8 +514,8 @@ var mbeSlider = (function () {
             slideX = this.neverSkip(slideX + 1, 'x');
             slideY = this.neverSkip(slideY + 1, 'y');
         } else {
-            slideX ++;
-            slideY ++;
+            slideX++;
+            slideY++;
         }
 
         this.gotoSlide(slideX, slideY, this.options.animationDuration);
@@ -516,8 +530,10 @@ var mbeSlider = (function () {
         return this._private.moved;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider, mbeHelper) {
+
+    'use strict';
 
     /**
      * Check wether the person is sliding horizontally or vertically
@@ -526,14 +542,13 @@ var mbeSlider = (function () {
      *
      * @return object
      */
-    mbeSlider.prototype.isSlidingProperly = function (event) {
+    MbeSlider.prototype.isSlidingProperly = function (event) {
 
         var
             a = this.getMousePosition(event),
             b = this._private.dragStart,
             distX = Math.abs(a.x - b.x),
             distY = Math.abs(a.y - b.y),
-            minDist = 10,
             direction;
 
         if (distX < 10 && distY < 10) {
@@ -561,7 +576,7 @@ var mbeSlider = (function () {
      *
      * @return object
      */
-    mbeSlider.prototype.getMousePosition = function (event) {
+    MbeSlider.prototype.getMousePosition = function (event) {
         var e = event || window.event;
 
         return {
@@ -577,7 +592,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.mouseMove = function (event) {
+    MbeSlider.prototype.mouseMove = function (event) {
 
         if (this._private.mousedown && this.isSlidingProperly(event)) {
 
@@ -596,25 +611,25 @@ var mbeSlider = (function () {
             this._private.speed.x = mbeHelper.toNumber(difX / (Date.now() - this._private.dragStartTime));
             this._private.speed.y = mbeHelper.toNumber(difY / (Date.now() - this._private.dragStartTime));
 
-            if (this.options.direction == 'horizontal' && difX !== 0) {
+            if (this.options.direction === 'horizontal' && difX !== 0) {
                 move = true;
                 finalY = 0;
 
                 if (finalX > 0) {
                     finalX = (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
-                } else if (finalX < - (this._private.maxSlides - 1) * this._private.width) {
-                    finalX = - (this._private.maxSlides - 1) * this._private.width + (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
+                } else if (finalX < -(this._private.maxSlides - 1) * this._private.width) {
+                    finalX = -(this._private.maxSlides - 1) * this._private.width + (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
                 }
 
                 this._private.speed.y = 0;
-            } else if (this.options.direction == 'vertical' && difY !== 0) {
+            } else if (this.options.direction === 'vertical' && difY !== 0) {
                 move = true;
                 finalX = 0;
 
                 if (finalY > 0) {
                     finalY = (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
-                } else if (finalY < - (this._private.maxSlides - 1) * this._private.height) {
-                    finalY = - (this._private.maxSlides - 1) * this._private.height + (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
+                } else if (finalY < -(this._private.maxSlides - 1) * this._private.height) {
+                    finalY = -(this._private.maxSlides - 1) * this._private.height + (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
                 }
 
                 this._private.speed.x = 0;
@@ -646,8 +661,10 @@ var mbeSlider = (function () {
 
 
 
-}());
-;(function () {
+}(MbeSlider, mbeHelper));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Events On Mouse Down
@@ -656,7 +673,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.mouseDown = function (event) {
+    MbeSlider.prototype.mouseDown = function (event) {
 
         if (event.preventDefault) {
             event.preventDefault();
@@ -700,15 +717,17 @@ var mbeSlider = (function () {
         return false;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Bind all the events of the slider
      *
      * @return void
      */
-    mbeSlider.prototype.bindEvents = function () {
+    MbeSlider.prototype.bindEvents = function () {
 
         if (this.bindedEvents) {
             return;
@@ -728,7 +747,7 @@ var mbeSlider = (function () {
 
             var self = this;
 
-            Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element, index) {
+            Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element) {
 
                 element.mbeBindEvent(self.getEventName('click'), self.navigationClick, self);
             });
@@ -742,7 +761,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.unbindEvents = function () {
+    MbeSlider.prototype.unbindEvents = function () {
 
         this.element.mbeUnbindEvent(this.getEventName('start'), this.mouseDown, this);
         document.mbeUnbindEvent(this.getEventName('move'), this.mouseMove, this);
@@ -764,7 +783,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.getEventName = function (type) {
+    MbeSlider.prototype.getEventName = function (type) {
 
         var events = {
             'start': ['touchstart'],
@@ -782,15 +801,17 @@ var mbeSlider = (function () {
         return events[type] || undefined;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider, mbeHelper) {
+
+    'use strict';
 
     /**
      * Set the element to the slider
      *
      * @return string
      */
-    mbeSlider.prototype.setElement = function (element) {
+    MbeSlider.prototype.setElement = function (element) {
         if (typeof element === 'string') {
             this.element = document.querySelector(element);
         } else {
@@ -807,7 +828,7 @@ var mbeSlider = (function () {
      *
      * @return string
      */
-    mbeSlider.prototype.setSlides = function () {
+    MbeSlider.prototype.setSlides = function () {
         var i;
 
         this._private.slides = [];
@@ -820,15 +841,17 @@ var mbeSlider = (function () {
         }
     };
 
-}());
-;(function () {
+}(MbeSlider, mbeHelper));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Hide the slider
      *
      * @return string
      */
-    mbeSlider.prototype.hide = function () {
+    MbeSlider.prototype.hide = function () {
         this.element.parentNode.mbeSetStyle({
             'display': 'none'
         });
@@ -839,7 +862,7 @@ var mbeSlider = (function () {
      *
      * @return string
      */
-    mbeSlider.prototype.show = function () {
+    MbeSlider.prototype.show = function () {
         this.element.parentNode.mbeSetStyle({
             'display': 'block'
         });
@@ -853,7 +876,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.click = function (event) {
+    MbeSlider.prototype.click = function (event) {
 
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
@@ -867,7 +890,7 @@ var mbeSlider = (function () {
      *
      * @return function
      */
-    mbeSlider.prototype.resize = function () {
+    MbeSlider.prototype.resize = function () {
 
         // Set the width of the slider
         this._private.width = this.element.offsetWidth;
@@ -878,15 +901,17 @@ var mbeSlider = (function () {
         return this._private.moved;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Get the current axe
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentAxe = function () {
+    MbeSlider.prototype.getCurrentAxe = function () {
         return this.options.direction === 'horizontal' ? 'x' : 'y';
     };
 
@@ -895,7 +920,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentSlideIndex = function () {
+    MbeSlider.prototype.getCurrentSlideIndex = function () {
         var axe = this.getCurrentAxe();
 
         return this._private.currentSlide[axe];
@@ -906,14 +931,16 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.getCurrentSlide = function () {
+    MbeSlider.prototype.getCurrentSlide = function () {
         var index = this.getCurrentSlideIndex();
 
         return this._private.slides[index - 1];
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Go to the slide "x"
@@ -924,19 +951,19 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.gotoSlide = function (x, y, animate) {
+    MbeSlider.prototype.gotoSlide = function (x, y, animate) {
 
-        if (typeof animate === undefined) {
+        if (typeof animate === 'undefined') {
             animate = true;
         }
 
         // Set the animation to animate
         this.setAnimation(animate === true ? this.options.slideDuration : animate || 0);
 
-        if (typeof x === undefined) {
+        if (typeof x === 'undefined') {
             x = 0;
         }
-        if (typeof y === undefined) {
+        if (typeof y === 'undefined') {
             y = 0;
         }
 
@@ -957,7 +984,7 @@ var mbeSlider = (function () {
         this._private.currentSlide.x = x;
         this._private.currentSlide.y = y;
 
-        this.moveTo(- (x - 1) * this._private.width, - (y - 1) * this._private.height);
+        this.moveTo(-(x - 1) * this._private.width, -(y - 1) * this._private.height);
 
         //set the navigation item as selected
         this.setNavigationItem();
@@ -982,7 +1009,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.gotoNextSlide = function (animate) {
+    MbeSlider.prototype.gotoNextSlide = function (animate) {
 
         var current = {
             x: this._private.currentSlide.x,
@@ -990,9 +1017,9 @@ var mbeSlider = (function () {
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x ++;
+            current.x++;
         } else {
-            current.y ++;
+            current.y++;
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -1006,7 +1033,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.gotoPreviousSlide = function (animate) {
+    MbeSlider.prototype.gotoPreviousSlide = function (animate) {
 
         var current = {
             x: this._private.currentSlide.x,
@@ -1014,23 +1041,25 @@ var mbeSlider = (function () {
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x --;
+            current.x--;
         } else {
-            current.y --;
+            current.y--;
         }
 
         this.gotoSlide(current.x, current.y, animate);
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Set the parent data to the node data
      *
      * @return void
      */
-    mbeSlider.prototype.setData = function () {
+    MbeSlider.prototype.setData = function () {
 
         var i;
 
@@ -1046,7 +1075,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.initStyle = function () {
+    MbeSlider.prototype.initStyle = function () {
         var i,
             elementStyle = this.getElementStyle(),
             slidesStyle = this.getSlidesStyle(),
@@ -1066,7 +1095,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.initHtml = function () {
+    MbeSlider.prototype.initHtml = function () {
         if (this.element.parentNode.classList.contains('mbe-slider')) {
             return;
         }
@@ -1080,7 +1109,7 @@ var mbeSlider = (function () {
         wrapper.classList.add('mbe-slider');
 
         // Add the classes from the element to the wrappoer
-        Array.prototype.forEach.call(this.element.classList, function (cssClass, index) {
+        Array.prototype.forEach.call(this.element.classList, function (cssClass) {
             wrapper.classList.add(cssClass);
         }, this);
 
@@ -1095,9 +1124,9 @@ var mbeSlider = (function () {
     /**
      * Init the Slider
      *
-     * @return mbeSlider
+     * @return MbeSlider
      */
-    mbeSlider.prototype.init = function () {
+    MbeSlider.prototype.init = function () {
 
         //set the main element
         this.setElement(this.options.element);
@@ -1145,39 +1174,43 @@ var mbeSlider = (function () {
         return this;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Events on key down
      *
      * @return function
      */
-    mbeSlider.prototype.keyDown = function (event) {
+    MbeSlider.prototype.keyDown = function (event) {
 
         var code = event.keyCode || event.which;
 
         if (this.options.direction === 'horizontal') {
-            if (code == 39) { //right
+            if (code === 39) { //right
                 event.preventDefault();
                 this.gotoNextSlide(true);
-            } else if (code == 37) { //left
+            } else if (code === 37) { //left
                 event.preventDefault();
                 this.gotoPreviousSlide(true);
             }
         } else {
-            if (code == 40) { //up
+            if (code === 40) { //up
                 event.preventDefault();
                 this.gotoNextSlide(true);
-            } else if (code == 38) { //down
+            } else if (code === 38) { //down
                 event.preventDefault();
                 this.gotoPreviousSlide(true);
             }
         }
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider, mbeHelper) {
+
+    'use strict';
 
     /**
      * Move the object to a certain point
@@ -1187,11 +1220,11 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.moveTo = function (x, y) {
+    MbeSlider.prototype.moveTo = function (x, y) {
 
-        if (this.options.direction == 'horizontal') {
+        if (this.options.direction === 'horizontal') {
             y = 0;
-        } else if (this.options.direction == 'vertical') {
+        } else if (this.options.direction === 'vertical') {
             x = 0;
         }
 
@@ -1208,15 +1241,17 @@ var mbeSlider = (function () {
 
     };
 
-}());
-;(function () {
+}(MbeSlider, mbeHelper));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Append the arrows
      *
      * @return void
      */
-    mbeSlider.prototype.appendArrows = function () {
+    MbeSlider.prototype.appendArrows = function () {
 
         if (!(this.options.navigation && this.options.navigation.arrows)) {
             return;
@@ -1254,7 +1289,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.arrowBackClick = function (e) {
+    MbeSlider.prototype.arrowBackClick = function (e) {
 
         e.preventDefault();
 
@@ -1267,7 +1302,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.arrowForwardClick = function (e) {
+    MbeSlider.prototype.arrowForwardClick = function (e) {
 
         e.preventDefault();
 
@@ -1280,7 +1315,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.setNavigationArrows = function () {
+    MbeSlider.prototype.setNavigationArrows = function () {
 
         if (!(this.options.navigation && this.options.navigation.arrows)) {
             return;
@@ -1304,15 +1339,17 @@ var mbeSlider = (function () {
         }
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Append navigation
      *
      * @return void
      */
-    mbeSlider.prototype.appendNavigation = function () {
+    MbeSlider.prototype.appendNavigation = function () {
 
         if (!(this.options.navigation && this.options.navigation.type)) {
             return;
@@ -1378,7 +1415,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.navigationClick = function (event) {
+    MbeSlider.prototype.navigationClick = function (event) {
         event.preventDefault();
 
         var slide = event.currentTarget.dataset.slide;
@@ -1395,7 +1432,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.setNavigationItem = function () {
+    MbeSlider.prototype.setNavigationItem = function () {
 
         if (!(this.options.navigation && this.options.navigation.type)) {
             return;
@@ -1416,8 +1453,10 @@ var mbeSlider = (function () {
         });
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Never skip a frame
@@ -1427,20 +1466,22 @@ var mbeSlider = (function () {
      *
      * @return object
      */
-    mbeSlider.prototype.neverSkip = function (slide, axis) {
+    MbeSlider.prototype.neverSkip = function (slide, axis) {
 
         if (axis.toLowerCase() === 'x' && this.options.direction === 'horizontal') {
             if (slide > this._private.currentSlide.x + 1) {
 
                 return this._private.currentSlide.x + 1;
-            } else if (slide < this._private.currentSlide.x - 1) {
+            }
+            if (slide < this._private.currentSlide.x - 1) {
                 return this._private.currentSlide.x - 1;
             }
         } else if (axis.toLowerCase() === 'y' && this.options.direction === 'vertical') {
             if (slide > this._private.currentSlide.y + 1) {
 
                 return this._private.currentSlide.y + 1;
-            } else if (slide < this._private.currentSlide.y - 1) {
+            }
+            if (slide < this._private.currentSlide.y - 1) {
                 return this._private.currentSlide.y - 1;
             }
         }
@@ -1448,31 +1489,35 @@ var mbeSlider = (function () {
         return slide;
     };
 
-}());
-;(function () {
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Refreshes the slider slides
      *
      * @return string
      */
-    mbeSlider.prototype.refreshSlides = function () {
+    MbeSlider.prototype.refreshSlides = function () {
 
         this.destroyStyle();
         this.setSlides();
         this.initStyle();
     };
 
-}());
+}(MbeSlider));
 ;/*jshint sub:true*/
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Get the style of the element
      *
      * @return void
      */
-    mbeSlider.prototype.getElementStyle = function () {
+    MbeSlider.prototype.getElementStyle = function () {
         var elementStyle = {
             'list-style': 'none',
             'margin': '0',
@@ -1497,7 +1542,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.getSlidesStyle = function () {
+    MbeSlider.prototype.getSlidesStyle = function () {
         var slidesStyle = {
             'margin': '0',
             'padding': '0',
@@ -1521,7 +1566,7 @@ var mbeSlider = (function () {
      *
      * @return void
      */
-    mbeSlider.prototype.getParentStyle = function () {
+    MbeSlider.prototype.getParentStyle = function () {
         var parentStyle = {
             'overflow': 'hidden'
         };
@@ -1533,4 +1578,4 @@ var mbeSlider = (function () {
         return parentStyle;
     };
 
-}());
+}(MbeSlider));

@@ -1,12 +1,14 @@
 /*jshint sub:true*/
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Get the style of the element
      *
      * @return void
      */
-    mbeSlider.prototype.getElementStyle = function () {
+    MbeSlider.prototype.getElementStyle = function () {
         var elementStyle = {
             'list-style': 'none',
             'margin': '0',
@@ -31,7 +33,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.getSlidesStyle = function () {
+    MbeSlider.prototype.getSlidesStyle = function () {
         var slidesStyle = {
             'margin': '0',
             'padding': '0',
@@ -55,7 +57,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.getParentStyle = function () {
+    MbeSlider.prototype.getParentStyle = function () {
         var parentStyle = {
             'overflow': 'hidden'
         };
@@ -67,4 +69,4 @@
         return parentStyle;
     };
 
-}());
+}(MbeSlider));

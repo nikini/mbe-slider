@@ -1,5 +1,7 @@
 (function () {
 
+    'use strict';
+
     /**
      * Remove white space between tags
      *
@@ -9,10 +11,10 @@
      * @return
      */
     Node.prototype.mbeRmoveWhiteSpace = function () {
-        var i;
+        var i, node;
         for (i = 0; i < this.childNodes.length; i++) {
-            var node = this.childNodes[i];
-            if (node.nodeType == 3 && !/\S/.test(node.nodeValue)) {
+            node = this.childNodes[i];
+            if (node.nodeType === 3 && !/\S/.test(node.nodeValue)) {
                 this.removeChild(node);
             }
         }

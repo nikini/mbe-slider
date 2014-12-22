@@ -1,4 +1,6 @@
-(function () {
+(function (MbeSlider, mbeHelper) {
+
+    'use strict';
 
     /**
      * Move the object to a certain point
@@ -8,11 +10,11 @@
      *
      * @return void
      */
-    mbeSlider.prototype.moveTo = function (x, y) {
+    MbeSlider.prototype.moveTo = function (x, y) {
 
-        if (this.options.direction == 'horizontal') {
+        if (this.options.direction === 'horizontal') {
             y = 0;
-        } else if (this.options.direction == 'vertical') {
+        } else if (this.options.direction === 'vertical') {
             x = 0;
         }
 
@@ -29,4 +31,4 @@
 
     };
 
-}());
+}(MbeSlider, mbeHelper));

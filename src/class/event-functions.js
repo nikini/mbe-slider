@@ -1,11 +1,13 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Bind all the events of the slider
      *
      * @return void
      */
-    mbeSlider.prototype.bindEvents = function () {
+    MbeSlider.prototype.bindEvents = function () {
 
         if (this.bindedEvents) {
             return;
@@ -25,7 +27,7 @@
 
             var self = this;
 
-            Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element, index) {
+            Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element) {
 
                 element.mbeBindEvent(self.getEventName('click'), self.navigationClick, self);
             });
@@ -39,7 +41,7 @@
      *
      * @return void
      */
-    mbeSlider.prototype.unbindEvents = function () {
+    MbeSlider.prototype.unbindEvents = function () {
 
         this.element.mbeUnbindEvent(this.getEventName('start'), this.mouseDown, this);
         document.mbeUnbindEvent(this.getEventName('move'), this.mouseMove, this);
@@ -61,7 +63,7 @@
      *
      * @return function
      */
-    mbeSlider.prototype.getEventName = function (type) {
+    MbeSlider.prototype.getEventName = function (type) {
 
         var events = {
             'start': ['touchstart'],
@@ -79,4 +81,4 @@
         return events[type] || undefined;
     };
 
-}());
+}(MbeSlider));

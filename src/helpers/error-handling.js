@@ -1,4 +1,6 @@
-(function () {
+(function (mbeHelper) {
+
+    'use strict';
 
     /**
      * Throw an mbe Slider Error
@@ -18,9 +20,9 @@
                 'object': object || null
             },
             'toString': function () {
-                return this.name + ' > ' + this.log.function + ': ' + this.message;
+                return this.name + ' > ' + this.log['function'] + ': ' + this.message;
             }
         };
     };
 
-}());
+}(mbeHelper));

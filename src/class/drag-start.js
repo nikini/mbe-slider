@@ -1,4 +1,6 @@
-(function () {
+(function (MbeSlider) {
+
+    'use strict';
 
     /**
      * Events On Mouse Down
@@ -7,7 +9,7 @@
      *
      * @return function
      */
-    mbeSlider.prototype.mouseDown = function (event) {
+    MbeSlider.prototype.mouseDown = function (event) {
 
         if (event.preventDefault) {
             event.preventDefault();
@@ -51,4 +53,4 @@
         return false;
     };
 
-}());
+}(MbeSlider));
