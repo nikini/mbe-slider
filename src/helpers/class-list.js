@@ -46,7 +46,7 @@
                 remove: function (className) {
                     var index = classes.indexOf(className);
 
-                    if (index < 0) {
+                    if (index >= 0) {
                         classes.splice(index, 1);
                     }
 
@@ -62,8 +62,6 @@
                  * @return void
                  */
                 toggle: function (className, truth) {
-                    var index = (truth === undefined ? !this.contains(className) : truth);
-
                     if (truth) {
                         if (!this.contains(className)) {
                             this.add(className);

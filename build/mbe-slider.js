@@ -171,7 +171,7 @@ var MbeSlider = (function () {
                 remove: function (className) {
                     var index = classes.indexOf(className);
 
-                    if (index < 0) {
+                    if (index >= 0) {
                         classes.splice(index, 1);
                     }
 
@@ -187,8 +187,6 @@ var MbeSlider = (function () {
                  * @return void
                  */
                 toggle: function (className, truth) {
-                    var index = (truth === undefined ? !this.contains(className) : truth);
-
                     if (truth) {
                         if (!this.contains(className)) {
                             this.add(className);
@@ -427,10 +425,17 @@ var MbeSlider = (function () {
      */
     Node.prototype.mbeSetStyle = function (obj) {
         var i;
+        var styleObject = this.style;
 
         for (i in obj) {
             if (obj.hasOwnProperty(i)) {
-                this.style[i] = obj[i];
+
+                if (typeof MSStyleCSSProperties === 'undefined') {
+                    styleObject.setProperty(i, obj[i]);
+                } else {
+                    //internet explorer
+                    styleObject[i] = obj[i];
+                }
             }
         }
     };
@@ -1161,13 +1166,12 @@ var MbeSlider = (function () {
      */
     MbeSlider.prototype.setData = function () {
 
-        var i;
-
-        for (i in this.element.dataset) {
-            if (this.element.dataset.hasOwnProperty(i)) {
-                this.element.parentNode.dataset[i] = this.element.dataset[i];
+        //not using dataset because of IE's lack of support
+        Array.prototype.forEach.call(this.element.attributes, function (attribute) {
+            if (/^data\-/i.test(attribute.name)) { //is a data attribute
+                this.element.parentNode.setAttribute(attribute.name, attribute.value);
             }
-        }
+        }, this);
     };
 
     /**
@@ -1259,7 +1263,7 @@ var MbeSlider = (function () {
         this.appendNavigation();
 
         //set the data to the parent
-        //this.setData();
+        this.setData();
 
         //bind the events
         this.bindEvents();
@@ -1497,7 +1501,7 @@ var MbeSlider = (function () {
                 navigationItem.appendChild(img);
             }
 
-            //set the slide in the dataset
+            //set the slide in the data attribute
             navigationItem.setAttribute('data-slide', index + 1);
 
             //append the item

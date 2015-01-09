@@ -55,7 +55,7 @@
                 navigationItem.appendChild(img);
             }
 
-            //set the slide in the dataset
+            //set the slide in the data attribute
             navigationItem.setAttribute('data-slide', index + 1);
 
             //append the item

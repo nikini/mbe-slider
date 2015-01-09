@@ -9,13 +9,12 @@
      */
     MbeSlider.prototype.setData = function () {
 
-        var i;
-
-        for (i in this.element.dataset) {
-            if (this.element.dataset.hasOwnProperty(i)) {
-                this.element.parentNode.dataset[i] = this.element.dataset[i];
+        //not using dataset because of IE's lack of support
+        Array.prototype.forEach.call(this.element.attributes, function (attribute) {
+            if (/^data\-/i.test(attribute.name)) { //is a data attribute
+                this.element.parentNode.setAttribute(attribute.name, attribute.value);
             }
-        }
+        }, this);
     };
 
     /**
@@ -107,7 +106,7 @@
         this.appendNavigation();
 
         //set the data to the parent
-        //this.setData();
+        this.setData();
 
         //bind the events
         this.bindEvents();

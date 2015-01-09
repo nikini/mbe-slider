@@ -11,10 +11,17 @@
      */
     Node.prototype.mbeSetStyle = function (obj) {
         var i;
+        var styleObject = this.style;
 
         for (i in obj) {
             if (obj.hasOwnProperty(i)) {
-                this.style[i] = obj[i];
+
+                if (typeof MSStyleCSSProperties === 'undefined') {
+                    styleObject.setProperty(i, obj[i]);
+                } else {
+                    //internet explorer
+                    styleObject[i] = obj[i];
+                }
             }
         }
     };
