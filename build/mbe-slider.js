@@ -430,7 +430,7 @@ var MbeSlider = (function () {
 
         for (i in obj) {
             if (obj.hasOwnProperty(i)) {
-                this.style.setProperty(i, obj[i]);
+                this.style[i] = obj[i];
             }
         }
     };
