@@ -123,6 +123,106 @@ var MbeSlider = (function () {
     return MbeSlider;
 
 }());
+;(function (mbeHelper) {
+
+    'use strict';
+
+
+    if (Node.prototype.hasOwnProperty('classList')) {
+        return;
+    }
+
+    Object.defineProperty(Node.prototype, 'classList', {
+        get: function () {
+
+            //get the class
+            var objectClass = this.getAttribute('class') || '';
+
+            //make an array out of the classes
+            var classes = objectClass.match(/[\w\-]+/ig) || [];
+
+            //save the reference to the node
+            var self = this;
+
+            return {
+
+                /**
+                 * Add the classes to the node
+                 */
+                add: function () {
+                    var i;
+
+                    for (i = 0; i < arguments.length; i++) {
+                        if (classes.indexOf(arguments[i]) < 0) {
+                            classes.push(arguments[i]);
+                        }
+                    }
+
+                    this.refresh();
+                },
+
+                /**
+                 * Remove a class from the node
+                 *
+                 * @param string className
+                 *
+                 * @return void
+                 */
+                remove: function (className) {
+                    var index = classes.indexOf(className);
+
+                    if (index < 0) {
+                        classes.splice(index, 1);
+                    }
+
+                    this.refresh();
+                },
+
+                /**
+                 * Toggle a class for the node
+                 *
+                 * @param string className
+                 * @param boolean truth
+                 *
+                 * @return void
+                 */
+                toggle: function (className, truth) {
+                    var index = (truth === undefined ? !this.contains(className) : truth);
+
+                    if (truth) {
+                        if (!this.contains(className)) {
+                            this.add(className);
+                        }
+                    } else {
+                        this.remove(className);
+                    }
+                },
+
+                /**
+                 * Detect wether node contains a class or not
+                 *
+                 * @param string className
+                 *
+                 * @return void
+                 */
+                contains: function (className) {
+                    return classes.indexOf(className) >= 0;
+                },
+
+                /**
+                 * Move the class list to the class attribute of the node
+                 *
+                 * @return void
+                 */
+                refresh: function () {
+                    self.className = classes.join(' ');
+                    self.setAttribute('class', self.className);
+                }
+            };
+        }
+    });
+
+}(mbeHelper));
 ;(function () {
 
     'use strict';
@@ -1159,7 +1259,7 @@ var MbeSlider = (function () {
         this.appendNavigation();
 
         //set the data to the parent
-        this.setData();
+        //this.setData();
 
         //bind the events
         this.bindEvents();
@@ -1386,19 +1486,19 @@ var MbeSlider = (function () {
             }
 
             //append an image if they are thumbs
-            if (this.options.navigation.type === 'thumbs' && element.dataset && element.dataset.thumb) {
+            if (this.options.navigation.type === 'thumbs' && element.getAttribute('data-thumb')) {
                 //create the image
                 var img = document.createElement('img');
 
                 //set the source
-                img.src = element.dataset.thumb;
+                img.src = element.getAttribute('data-thumb');
 
                 //append the image
                 navigationItem.appendChild(img);
             }
 
             //set the slide in the dataset
-            navigationItem.dataset.slide = index + 1;
+            navigationItem.setAttribute('data-slide', index + 1);
 
             //append the item
             navigation.appendChild(navigationItem);
@@ -1418,7 +1518,7 @@ var MbeSlider = (function () {
     MbeSlider.prototype.navigationClick = function (event) {
         event.preventDefault();
 
-        var slide = event.currentTarget.dataset.slide;
+        var slide = parseInt(event.currentTarget.getAttribute('data-slide'), 10);
 
         if (this.options.direction === 'horizontal') {
             this.gotoSlide(slide, 1, true);

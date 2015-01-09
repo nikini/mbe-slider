@@ -44,19 +44,19 @@
             }
 
             //append an image if they are thumbs
-            if (this.options.navigation.type === 'thumbs' && element.dataset && element.dataset.thumb) {
+            if (this.options.navigation.type === 'thumbs' && element.getAttribute('data-thumb')) {
                 //create the image
                 var img = document.createElement('img');
 
                 //set the source
-                img.src = element.dataset.thumb;
+                img.src = element.getAttribute('data-thumb');
 
                 //append the image
                 navigationItem.appendChild(img);
             }
 
             //set the slide in the dataset
-            navigationItem.dataset.slide = index + 1;
+            navigationItem.setAttribute('data-slide', index + 1);
 
             //append the item
             navigation.appendChild(navigationItem);
@@ -76,7 +76,7 @@
     MbeSlider.prototype.navigationClick = function (event) {
         event.preventDefault();
 
-        var slide = event.currentTarget.dataset.slide;
+        var slide = parseInt(event.currentTarget.getAttribute('data-slide'), 10);
 
         if (this.options.direction === 'horizontal') {
             this.gotoSlide(slide, 1, true);

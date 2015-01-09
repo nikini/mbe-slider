@@ -107,7 +107,7 @@
         this.appendNavigation();
 
         //set the data to the parent
-        this.setData();
+        //this.setData();
 
         //bind the events
         this.bindEvents();
