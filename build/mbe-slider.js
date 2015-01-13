@@ -518,6 +518,30 @@ var MbeSlider = (function () {
 
     'use strict';
 
+
+    /**
+     * Events On Click
+     *
+     * @param  object event
+     *
+     * @return function
+     */
+    MbeSlider.prototype.click = function (event) {
+
+    	console.log(this._private.moved);
+
+        if (this._private.moved && event.preventDefault) {
+            event.preventDefault();
+        }
+
+        return this._private.moved;
+    };
+
+}(MbeSlider));
+;(function (MbeSlider) {
+
+    'use strict';
+
     /**
      * Init the CSS Function
      *
@@ -628,11 +652,11 @@ var MbeSlider = (function () {
         /**
          * Bind Custom Event
          */
-        if (this.options.onEndDragging && typeof this.options.onEndDragging === 'function') {
+        if (this._private.moved && this.options.onEndDragging && typeof this.options.onEndDragging === 'function') {
             this.options.onEndDragging.call(this);
         }
 
-        return this._private.moved;
+        return !this._private.moved;
     };
 
 }(MbeSlider));
@@ -780,7 +804,7 @@ var MbeSlider = (function () {
      */
     MbeSlider.prototype.mouseDown = function (event) {
 
-        if (event.preventDefault) {
+        if (event.which == 1 && event.preventDefault) {
             event.preventDefault();
         }
 
@@ -971,23 +995,6 @@ var MbeSlider = (function () {
         this.element.parentNode.mbeSetStyle({
             'display': 'block'
         });
-    };
-
-
-    /**
-     * Events On Click
-     *
-     * @param  object event
-     *
-     * @return function
-     */
-    MbeSlider.prototype.click = function (event) {
-
-        if (this._private.moved && event.preventDefault) {
-            event.preventDefault();
-        }
-
-        return this._private.moved;
     };
 
     /**

@@ -11,7 +11,7 @@
      */
     MbeSlider.prototype.mouseDown = function (event) {
 
-        if (event.preventDefault) {
+        if (event.which == 1 && event.preventDefault) {
             event.preventDefault();
         }
 

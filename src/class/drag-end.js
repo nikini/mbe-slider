@@ -44,11 +44,11 @@
         /**
          * Bind Custom Event
          */
-        if (this.options.onEndDragging && typeof this.options.onEndDragging === 'function') {
+        if (this._private.moved && this.options.onEndDragging && typeof this.options.onEndDragging === 'function') {
             this.options.onEndDragging.call(this);
         }
 
-        return this._private.moved;
+        return !this._private.moved;
     };
 
 }(MbeSlider));

@@ -24,23 +24,6 @@
         });
     };
 
-
-    /**
-     * Events On Click
-     *
-     * @param  object event
-     *
-     * @return function
-     */
-    MbeSlider.prototype.click = function (event) {
-
-        if (this._private.moved && event.preventDefault) {
-            event.preventDefault();
-        }
-
-        return this._private.moved;
-    };
-
     /**
      * Events on resize
      *
