@@ -12,10 +12,9 @@
      */
     MbeSlider.prototype.click = function (event) {
 
-    	console.log(this._private.moved);
-
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
+            event.stopPropagation();
         }
 
         return this._private.moved;

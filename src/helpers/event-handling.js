@@ -37,7 +37,7 @@
             this.bindedEvents[event].push(usedFunction);
 
             if (this.addEventListener) {
-                this.addEventListener(event, usedFunction, false);
+                this.addEventListener(event, usedFunction, true);
             } else {
                 this.attachEvent('on' + event, usedFunction);
             }

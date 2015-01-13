@@ -311,7 +311,7 @@ var MbeSlider = (function () {
             this.bindedEvents[event].push(usedFunction);
 
             if (this.addEventListener) {
-                this.addEventListener(event, usedFunction, false);
+                this.addEventListener(event, usedFunction, true);
             } else {
                 this.attachEvent('on' + event, usedFunction);
             }
@@ -528,10 +528,9 @@ var MbeSlider = (function () {
      */
     MbeSlider.prototype.click = function (event) {
 
-    	console.log(this._private.moved);
-
         if (this._private.moved && event.preventDefault) {
             event.preventDefault();
+            event.stopPropagation();
         }
 
         return this._private.moved;
