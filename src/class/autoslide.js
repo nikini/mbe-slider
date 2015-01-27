@@ -11,7 +11,10 @@
 
         //autoslide
         if (this.options.autoSlide) {
-            window.setTimeout(this.gotoNextSlide.bind(this, true), this.options.autoSlide || 3000);
+            if (this.autoSlideTimeout) {
+                window.clearTimeout(this.autoSlideTimeout);
+            }
+            this.autoSlideTimeout = window.setTimeout(this.gotoNextSlide.bind(this, true), this.options.autoSlide || 3000);
         }
     };
 
