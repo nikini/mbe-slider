@@ -111,6 +111,9 @@
         //bind the events
         this.bindEvents();
 
+        //autoslide
+        this.autoSlide();
+
         /**
          * Init Event
          */

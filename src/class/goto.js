@@ -52,6 +52,9 @@
         //set the navigation arrows
         this.setNavigationArrows();
 
+        //autoslide
+        this.autoSlide();
+
         /**
          * Init Event
          */
@@ -77,9 +80,9 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x++;
+            current.x = current.x < this._private.maxSlides ? current.x + 1 : 1;
         } else {
-            current.y++;
+            current.y = current.y < this._private.maxSlides ? current.y + 1 : 1;
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -101,9 +104,9 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x--;
+            current.x = current.x > 1 ? current.x - 1 : this._private.maxSlides;
         } else {
-            current.y--;
+            current.y = current.y > 1 ? current.y - 1 : this._private.maxSlides;
         }
 
         this.gotoSlide(current.x, current.y, animate);

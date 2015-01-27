@@ -44,6 +44,7 @@ var MbeSlider = (function () {
             slideDuration: 900, //the duration of the movement from slide to slide
             pullMargin: 20, //percent of pull margin
             neverSkip: false, //wether to skip a slide or not (depending on inertia)
+            autoSlide : 0, //autoSlide duration (in milliseconds, if zero then no autoslide)
 
             /**
              * Events
@@ -514,6 +515,27 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider));
+;;(function (MbeSlider) {
+
+    'use strict';
+
+    /**
+     * Autoslide the slider (if it's the case)
+     *
+     * @return function
+     */
+    MbeSlider.prototype.autoSlide = function () {
+
+        //autoslide
+        if (this.options.autoSlide) {
+            window.setTimeout(this.gotoNextSlide.bind(this, true), this.options.autoSlide || 3000);
+        }
+    };
+
+}(MbeSlider));
+
+
+
 ;(function (MbeSlider) {
 
     'use strict';
@@ -1103,6 +1125,9 @@ var MbeSlider = (function () {
         //set the navigation arrows
         this.setNavigationArrows();
 
+        //autoslide
+        this.autoSlide();
+
         /**
          * Init Event
          */
@@ -1128,9 +1153,9 @@ var MbeSlider = (function () {
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x++;
+            current.x = current.x < this._private.maxSlides ? current.x + 1 : 1;
         } else {
-            current.y++;
+            current.y = current.y < this._private.maxSlides ? current.y + 1 : 1;
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -1152,9 +1177,9 @@ var MbeSlider = (function () {
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x--;
+            current.x = current.x > 1 ? current.x - 1 : this._private.maxSlides;
         } else {
-            current.y--;
+            current.y = current.y > 1 ? current.y - 1 : this._private.maxSlides;
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -1273,6 +1298,9 @@ var MbeSlider = (function () {
 
         //bind the events
         this.bindEvents();
+
+        //autoslide
+        this.autoSlide();
 
         /**
          * Init Event
