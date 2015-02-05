@@ -52,13 +52,11 @@
             wrapper = document.createElement('div'),
             clone = this.element.cloneNode(true);
 
+        // Get the element classes
+        wrapper.setAttribute('class', this.element.className);
+
         // Add The parent class
         wrapper.classList.add('mbe-slider');
-
-        // Add the classes from the element to the wrappoer
-        Array.prototype.forEach.call(this.element.classList, function (cssClass) {
-            wrapper.classList.add(cssClass);
-        }, this);
 
         // Make the element to be the parent
         wrapper.appendChild(clone);
