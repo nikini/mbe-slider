@@ -18,8 +18,9 @@
      */
     MbeSlider.prototype.getCurrentSlideIndex = function () {
         var axe = this.getCurrentAxe();
+        var index = this._private.currentSlide[axe];
 
-        return this._private.currentSlide[axe];
+        return index;
     };
 
     /**

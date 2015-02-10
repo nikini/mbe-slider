@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, window) {
 
     'use strict';
 
@@ -17,8 +17,10 @@
             animate = true;
         }
 
+        var duration = animate === true ? this.options.slideDuration : animate || 0;
+
         // Set the animation to animate
-        this.setAnimation(animate === true ? this.options.slideDuration : animate || 0);
+        this.setAnimation(duration);
 
         if (typeof x === 'undefined') {
             x = 0;
@@ -28,15 +30,15 @@
         }
 
         //make it within proportions
-        if (x > this._private.maxSlides) {
-            x = this._private.maxSlides;
+        if (x > this._private.totalSlides) {
+            x = this._private.totalSlides;
         } else if (x <= 0) {
             x = 1;
         }
 
         //make it within proportions
-        if (y > this._private.maxSlides) {
-            y = this._private.maxSlides;
+        if (y > this._private.totalSlides) {
+            y = this._private.totalSlides;
         } else if (y <= 0) {
             y = 1;
         }
@@ -52,8 +54,41 @@
         //set the navigation arrows
         this.setNavigationArrows();
 
+        //set timeout
+        window.setTimeout(this.afterSlide.bind(this), duration);
+    };
+
+
+    /**
+     * Called after the animation is done
+     *
+     * @param  mixed animate
+     *
+     * @return void
+     */
+    MbeSlider.prototype.afterSlide = function () {
+
         //autoslide
         this.autoSlide();
+
+        //infinite
+        if (this.options.infinite) {
+            if (this.options.direction === 'horizontal') {
+                if (this._private.currentSlide.x === this._private.totalSlides) {
+                    this.gotoSlide(2, this._private.currentSlide.y, false);
+                }
+                if (this._private.currentSlide.x === 1) {
+                    this.gotoSlide(this._private.totalSlides - 1, this._private.currentSlide.y, false);
+                }
+            } else {
+                if (this._private.currentSlide.y === this._private.totalSlides) {
+                    this.gotoSlide(this._private.currentSlide.x, 2, false);
+                }
+                if (this._private.currentSlide.y === 1) {
+                    this.gotoSlide(this._private.currentSlide.x, this._private.totalSlides - 1, false);
+                }
+            }
+        }
 
         /**
          * Init Event
@@ -80,9 +115,27 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x = current.x < this._private.maxSlides ? current.x + 1 : 1;
+            if (current.x < this._private.totalSlides) {
+                current.x++;
+            } else {
+                if (this.options.infinite) {
+                    current.x = 1;
+                } else {
+                    this.stopAutoSlide();
+                    return;
+                }
+            }
         } else {
-            current.y = current.y < this._private.maxSlides ? current.y + 1 : 1;
+            if (current.y < this._private.totalSlides) {
+                current.y++;
+            } else {
+                if (this.options.infinite) {
+                    current.y = 1;
+                } else {
+                    this.stopAutoSlide();
+                    return;
+                }
+            }
         }
 
         this.gotoSlide(current.x, current.y, animate);
@@ -104,12 +157,58 @@
         };
 
         if (this.options.direction === 'horizontal') {
-            current.x = current.x > 1 ? current.x - 1 : this._private.maxSlides;
+            if (current.x > 1) {
+                current.x--;
+            } else {
+                if (this.options.infinite) {
+                    current.x = this._private.maxSlides;
+                } else {
+                    this.stopAutoSlide();
+                    return;
+                }
+            }
         } else {
-            current.y = current.y > 1 ? current.y - 1 : this._private.maxSlides;
+            if (current.y > 1) {
+                current.y--;
+            } else {
+                if (this.options.infinite) {
+                    current.y = this._private.maxSlides;
+                } else {
+                    this.stopAutoSlide();
+                    return;
+                }
+            }
         }
 
         this.gotoSlide(current.x, current.y, animate);
     };
 
-}(MbeSlider));
+    /**
+     * Go to the first slide
+     *
+     * @param  mixed animate
+     *
+     * @return void
+     */
+    MbeSlider.prototype.gotoFirstSlide = function (animate) {
+
+        var slide = 1;
+        var current = {
+            x: slide,
+            y: slide
+        };
+
+        if (this.options.infinite) {
+            slide++;
+        }
+
+        if (this.options.direction === 'horizontal') {
+            current.x = slide;
+        } else {
+            current.y = slide;
+        }
+
+        this.gotoSlide(current.x, current.y, animate);
+    };
+
+}(MbeSlider, window));

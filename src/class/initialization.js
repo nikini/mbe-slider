@@ -47,23 +47,46 @@
             return;
         }
 
-        // Create the element
-        var
-            wrapper = document.createElement('div'),
-            clone = this.element.cloneNode(true);
+        //create the element
+        var wrapper = document.createElement('div');
+        var clone = this.element.cloneNode(true);
 
-        // Get the element classes
+        //get the element classes
         wrapper.setAttribute('class', this.element.className);
 
-        // Add The parent class
+        //add The parent class
         wrapper.classList.add('mbe-slider');
 
-        // Make the element to be the parent
+        //make the element to be the parent
         wrapper.appendChild(clone);
         this.element.parentNode.replaceChild(wrapper, this.element);
 
-        // Refetch the element
+        //refetch the element
         this.setElement(clone);
+    };
+
+    /**
+     * Init the HTML for the slides Function
+     *
+     * @return void
+     */
+    MbeSlider.prototype.initSlidesHtml = function () {
+
+        //if infinite duplicate the first and last element
+        if (this.options.infinite) {
+
+            //clone the first and the last element
+            var firstClone = this.element.firstChild.cloneNode(true);
+            var lastClone = this.element.lastChild.cloneNode(true);
+
+            //using setattribute instead of dataset for ie's sake
+            firstClone.setAttribute('data-ignore', 1);
+            lastClone.setAttribute('data-ignore', 1);
+
+            //append the firstclone and prepend the lastclone
+            this.element.appendChild(firstClone);
+            this.element.insertBefore(lastClone, this.element.firstChild);
+        }
     };
 
     /**
@@ -82,6 +105,9 @@
         //init the html
         this.initHtml();
 
+        //init the slides html
+        this.initSlidesHtml();
+
         //set the slides
         this.setSlides();
 
@@ -93,7 +119,7 @@
         this._private.height = this.element.offsetHeight;
 
         //get the number of slides
-        this._private.maxSlides = this.element.childNodes.length;
+        this._private.totalSlides = this._private.slides.length;
         this._private.currentSlide.x = 1;
         this._private.currentSlide.y = 1;
 
@@ -111,6 +137,9 @@
 
         //autoslide
         this.autoSlide();
+
+        //go to first slide
+        this.gotoFirstSlide(false);
 
         /**
          * Init Event

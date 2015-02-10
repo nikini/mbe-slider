@@ -41,7 +41,7 @@
 			<li style="background: #D9BB96">&nbsp;</li>
 			<li style="background: #A6662E">&nbsp;</li>
 			<li style="background: #733924">&nbsp;</li>
-			<li style="background: #BF4B21">&nbsp;</li>
+			<li style="background: #BF4B21">LAST</li>
 
 		</ul> <!-- .mobileScroller -->
 
@@ -55,12 +55,15 @@
 					element: '.mobileScroller',
 					direction: 'horizontal',
 					neverSkip: true,
-					autoSlide: 3000
+					autoSlide: 3000,
+					infinite: true
 				});
 				var timeEnd = Date.now();
 
-				var durationObj = document.querySelector('.notice .duration');
-				durationObj.innerHTML = timeEnd - timeStart;
+				var durationObj = document.querySelectorAll('.notice .duration');
+				Array.prototype.forEach.call(durationObj, function (element) {
+					element.innerHTML = timeEnd - timeStart;
+				});
 			}
 		</script>
 		<!-- /Javascript -->

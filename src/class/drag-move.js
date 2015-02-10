@@ -84,8 +84,8 @@
 
                 if (finalX > 0) {
                     finalX = (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
-                } else if (finalX < -(this._private.maxSlides - 1) * this._private.width) {
-                    finalX = -(this._private.maxSlides - 1) * this._private.width + (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
+                } else if (finalX < -(this._private.totalSlides - 1) * this._private.width) {
+                    finalX = -(this._private.totalSlides - 1) * this._private.width + (pos.x - this._private.dragStart.x) * this.options.pullMargin / 100;
                 }
 
                 this._private.speed.y = 0;
@@ -95,8 +95,8 @@
 
                 if (finalY > 0) {
                     finalY = (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
-                } else if (finalY < -(this._private.maxSlides - 1) * this._private.height) {
-                    finalY = -(this._private.maxSlides - 1) * this._private.height + (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
+                } else if (finalY < -(this._private.totalSlides - 1) * this._private.height) {
+                    finalY = -(this._private.totalSlides - 1) * this._private.height + (pos.y - this._private.dragStart.y) * this.options.pullMargin / 100;
                 }
 
                 this._private.speed.x = 0;

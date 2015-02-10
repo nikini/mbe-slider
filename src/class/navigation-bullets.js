@@ -32,6 +32,9 @@
 
         //add all elements
         this._private.slides.forEach(function (element, index) {
+            if (element.ignore) {
+                return;
+            }
             var navigationItem = document.createElement('div');
 
             //add the classes
@@ -100,6 +103,16 @@
             currentSlide = this.getCurrentSlideIndex(),
             navigationClass = this.options.navigation.className,
             navigationItems = this.element.parentNode.querySelector('.' + navigationClass).childNodes;
+
+        if (this.options.infinite) {
+            currentSlide--;
+            if (currentSlide === 0) {
+                currentSlide = this._private.maxSlides;
+            }
+            if (currentSlide > this._private.maxSlides) {
+                currentSlide = 1;
+            }
+        }
 
         Array.prototype.forEach.call(navigationItems, function (element, index) {
 

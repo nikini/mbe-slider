@@ -44,7 +44,9 @@ var MbeSlider = (function () {
             slideDuration: 900, //the duration of the movement from slide to slide
             pullMargin: 20, //percent of pull margin
             neverSkip: false, //wether to skip a slide or not (depending on inertia)
-            autoSlide : 0, //autoSlide duration (in milliseconds, if zero then no autoslide)
+            autoSlide: 0, //autoSlide duration (in milliseconds, if zero then no autoslide)
+            autoSlideDirection: 'next', //which direction to autoslide to (can be 'next' or 'previous')
+            infinite: false, //wether to make it an infinite slider or not
 
             /**
              * Events
