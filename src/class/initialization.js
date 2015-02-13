@@ -73,7 +73,7 @@
     MbeSlider.prototype.initSlidesHtml = function () {
 
         //if infinite duplicate the first and last element
-        if (this.options.infinite) {
+        if (this.options.infinite && this.element.firstChild) {
 
             //clone the first and the last element
             var firstClone = this.element.firstChild.cloneNode(true);
