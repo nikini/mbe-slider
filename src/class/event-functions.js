@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -13,14 +13,14 @@
             return;
         }
 
-        this.element.mbeBindEvent(this.getEventName('start'), this.mouseDown, this);
-        document.mbeBindEvent(this.getEventName('move'), this.mouseMove, this);
-        document.mbeBindEvent(this.getEventName('end'), this.mouseUp, this);
-        this.element.mbeBindEvent(this.getEventName('click'), this.click, this);
-        window.mbeBindEvent(['resize'], this.resize, this);
+        mbeHelper.bindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
+        mbeHelper.bindEvent(document, this.getEventName('move'), this.mouseMove, this);
+        mbeHelper.bindEvent(document, this.getEventName('end'), this.mouseUp, this);
+        mbeHelper.bindEvent(this.element, this.getEventName('click'), this.click, this);
+        mbeHelper.bindEvent(window, ['resize'], this.resize, this);
 
         if (this.options.navigation && this.options.navigation.keys) {
-            window.mbeBindEvent(['keydown'], this.keyDown, this);
+            mbeHelper.bindEvent(window, ['keydown'], this.keyDown, this);
         }
 
         if (this.options.navigation && this.options.navigation.type && this.options.navigation.clickable) {
@@ -29,7 +29,7 @@
 
             Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element) {
 
-                element.mbeBindEvent(self.getEventName('click'), self.navigationClick, self);
+                mbeHelper.bindEvent(element, self.getEventName('click'), self.navigationClick, self);
             });
         }
 
@@ -43,14 +43,14 @@
      */
     MbeSlider.prototype.unbindEvents = function () {
 
-        this.element.mbeUnbindEvent(this.getEventName('start'), this.mouseDown, this);
-        document.mbeUnbindEvent(this.getEventName('move'), this.mouseMove, this);
-        document.mbeUnbindEvent(this.getEventName('end'), this.mouseUp, this);
-        this.element.mbeUnbindEvent(this.getEventName('click'), this.click, this);
-        window.mbeUnbindEvent(['resize'], this.resize, this);
+        mbeHelper.unbindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
+        mbeHelper.unbindEvent(document, this.getEventName('move'), this.mouseMove, this);
+        mbeHelper.unbindEvent(document, this.getEventName('end'), this.mouseUp, this);
+        mbeHelper.unbindEvent(this.element, this.getEventName('click'), this.click, this);
+        mbeHelper.unbindEvent(window, ['resize'], this.resize, this);
 
         if (this.options.navigation && this.options.navigation.keys) {
-            window.mbeUnbindEvent(['keydown'], this.keyDown, this);
+            mbeHelper.unbindEvent(window, ['keydown'], this.keyDown, this);
         }
 
         this.bindedEvents = false;
@@ -81,4 +81,4 @@
         return events[type] || undefined;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));

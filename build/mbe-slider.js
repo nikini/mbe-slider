@@ -224,29 +224,28 @@ var MbeSlider = (function () {
     });
 
 }(mbeHelper));
-;(function () {
+;(function (mbeHelper) {
 
     'use strict';
 
     /**
      * Remove white space between tags
      *
-     * @param  string type
-     * @param  function func
+     * @param  Node element
      *
      * @return
      */
-    Node.prototype.mbeRmoveWhiteSpace = function () {
+    mbeHelper.removeWhiteSpace = function (element) {
         var i, node;
-        for (i = 0; i < this.childNodes.length; i++) {
-            node = this.childNodes[i];
+        for (i = 0; i < element.childNodes.length; i++) {
+            node = element.childNodes[i];
             if (node.nodeType === 3 && !/\S/.test(node.nodeValue)) {
-                this.removeChild(node);
+                element.removeChild(node);
             }
         }
     };
 
-}());
+}(mbeHelper));
 ;(function (mbeHelper) {
 
     'use strict';
@@ -282,28 +281,29 @@ var MbeSlider = (function () {
     /**
      * Bind an event to an object
      *
+     * @param  Node element
      * @param  array events
      * @param  function func
      * @param  object thisValue
      *
      * @return
      */
-    Node.prototype.mbeBindEvent = function (events, func, thisValue) {
+    mbeHelper.bindEvent = function (element, events, func, thisValue) {
 
         if (!events) {
-            mbeHelper.throwError('Cannot attach event with empty name', 'mbeBindEvent', this);
+            mbeHelper.throwError('Cannot attach event with empty name', 'bindEvent', element);
             return;
         }
 
         if (!func) {
-            mbeHelper.throwError('Function for the event does not exist', 'mbeBindEvent', this);
+            mbeHelper.throwError('Function for the event does not exist', 'bindEvent', element);
             return;
         }
 
         var usedFunction = func.bind(thisValue);
 
-        if (!this.bindedEvents) {
-            this.bindedEvents = {};
+        if (!element.bindedEvents) {
+            element.bindedEvents = {};
         }
 
         events.forEach(function (event) {
@@ -318,28 +318,28 @@ var MbeSlider = (function () {
             } else {
                 this.attachEvent('on' + event, usedFunction);
             }
-        }, this);
+        }, element);
     };
-    Window.prototype.mbeBindEvent = Node.prototype.mbeBindEvent;
 
     /**
      * Unbind an event from an object
      *
+     * @param  Node element
      * @param  array events
      * @param  function func
      * @param  object thisValue
      *
      * @return
      */
-    Node.prototype.mbeUnbindEvent = function (events, func, thisValue) {
+    mbeHelper.unbindEvent = function (element, events, func, thisValue) {
 
         if (!events) {
-            mbeHelper.throwError('Cannot dettach event with empty name', 'mbeUnbindEvent', this);
+            mbeHelper.throwError('Cannot dettach event with empty name', 'unbindEvent', element);
             return;
         }
 
         if (!func) {
-            mbeHelper.throwError('Function for the event dettachment does not exist', 'mbeUnbindEvent', this);
+            mbeHelper.throwError('Function for the event dettachment does not exist', 'unbindEvent', element);
             return;
         }
 
@@ -362,9 +362,8 @@ var MbeSlider = (function () {
             } else {
                 this.attachEvent('on' + event, func.bind(thisValue));
             }
-        }, this);
+        }, element);
     };
-    Window.prototype.mbeUnbindEvent = Node.prototype.mbeUnbindEvent;
 
 }(mbeHelper));
 ;(function (mbeHelper) {
@@ -415,20 +414,21 @@ var MbeSlider = (function () {
     };
 
 }(mbeHelper));
-;(function () {
+;(function (mbeHelper) {
 
     'use strict';
 
     /**
      * Set CSS for an element
      *
+     * @param  Node element
      * @param  Object obj
      *
      * @return void
      */
-    Node.prototype.mbeSetStyle = function (obj) {
+    mbeHelper.setStyle = function (element, obj) {
         var i;
-        var styleObject = this.style;
+        var styleObject = element.style;
 
         for (i in obj) {
             if (obj.hasOwnProperty(i)) {
@@ -446,32 +446,34 @@ var MbeSlider = (function () {
     /**
      * Remove the CSS from an element
      *
+     * @param  Node element
      * @param  array obj
      *
      * @return void
      */
-    Node.prototype.mbeRemoveStyle = function (obj) {
+    mbeHelper.removeStyle = function (element, obj) {
         var i;
 
         for (i = 0; i < obj.length; i++) {
-            this.mbeRemoveSingleStyle(obj[i]);
+            mbeHelper.removeSingleStyle(element, obj[i]);
         }
     };
 
     /**
      * Remove the single CSS from an element
      *
+     * @param  Node element
      * @param  array obj
      *
      * @return void
      */
-    Node.prototype.mbeRemoveSingleStyle = function (property) {
+    mbeHelper.removeSingleStyle = function (element, property) {
 
-        this.style.removeProperty(property);
+        element.style.removeProperty(property);
     };
 
-}());
-;(function (MbeSlider) {
+}(mbeHelper));
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -487,7 +489,7 @@ var MbeSlider = (function () {
 
         if (duration > 0) {
 
-            this.element.mbeSetStyle({
+            mbeHelper.setStyle(this.element, {
                 '-webkit-transform-style': 'preserve-3d',
                 '-webkit-backface-visibility': 'hidden',
                 '-webkit-perspective': 1000,
@@ -512,11 +514,11 @@ var MbeSlider = (function () {
             });
         } else {
 
-            this.element.mbeRemoveStyle(['-webkit-transition-property', '-moz-transition-property', '-o-transition-property', '-ms-transition-property', 'transition-property', '-webkit-transition-duration', '-moz-transition-duration', '-o-transition-duration', '-ms-transition-duration', 'transition-duration', '-webkit-transition-timing-function', '-moz-transition-timing-function', '-o-transition-timing-function', '-ms-transition-timing-function', 'transition-timing-function']);
+            mbeHelper.removeStyle(this.element, ['-webkit-transition-property', '-moz-transition-property', '-o-transition-property', '-ms-transition-property', 'transition-property', '-webkit-transition-duration', '-moz-transition-duration', '-o-transition-duration', '-ms-transition-duration', 'transition-duration', '-webkit-transition-timing-function', '-moz-transition-timing-function', '-o-transition-timing-function', '-ms-transition-timing-function', 'transition-timing-function']);
         }
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;;(function (MbeSlider) {
 
     'use strict';
@@ -586,7 +588,7 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider));
-;(function (MbeSlider) {
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -603,21 +605,21 @@ var MbeSlider = (function () {
 
         for (i in elementStyle) {
             if (elementStyle.hasOwnProperty(i)) {
-                this.element.mbeRemoveSingleStyle(i);
+                mbeHelper.removeSingleStyle(this.element, i);
             }
         }
 
         for (i in slidesStyle) {
             if (slidesStyle.hasOwnProperty(i)) {
                 for (j = 0; j < this._private.slides.length; j++) {
-                    this._private.slides[j].element.mbeRemoveSingleStyle(i);
+                    mbeHelper.removeSingleStyle(this._private.slides[j].element, i);
                 }
             }
         }
 
         for (i in parentStyle) {
             if (parentStyle.hasOwnProperty(i)) {
-                this.element.parentNode.mbeRemoveSingleStyle(i);
+                mbeHelper.removeSingleStyle(this.element.parentNode, i);
             }
         }
     };
@@ -653,7 +655,7 @@ var MbeSlider = (function () {
         console.timeEnd('destroy #' + this.options.id);
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;(function (MbeSlider) {
 
     'use strict';
@@ -895,7 +897,7 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider));
-;(function (MbeSlider) {
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -910,14 +912,14 @@ var MbeSlider = (function () {
             return;
         }
 
-        this.element.mbeBindEvent(this.getEventName('start'), this.mouseDown, this);
-        document.mbeBindEvent(this.getEventName('move'), this.mouseMove, this);
-        document.mbeBindEvent(this.getEventName('end'), this.mouseUp, this);
-        this.element.mbeBindEvent(this.getEventName('click'), this.click, this);
-        window.mbeBindEvent(['resize'], this.resize, this);
+        mbeHelper.bindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
+        mbeHelper.bindEvent(document, this.getEventName('move'), this.mouseMove, this);
+        mbeHelper.bindEvent(document, this.getEventName('end'), this.mouseUp, this);
+        mbeHelper.bindEvent(this.element, this.getEventName('click'), this.click, this);
+        mbeHelper.bindEvent(window, ['resize'], this.resize, this);
 
         if (this.options.navigation && this.options.navigation.keys) {
-            window.mbeBindEvent(['keydown'], this.keyDown, this);
+            mbeHelper.bindEvent(window, ['keydown'], this.keyDown, this);
         }
 
         if (this.options.navigation && this.options.navigation.type && this.options.navigation.clickable) {
@@ -926,7 +928,7 @@ var MbeSlider = (function () {
 
             Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element) {
 
-                element.mbeBindEvent(self.getEventName('click'), self.navigationClick, self);
+                mbeHelper.bindEvent(element, self.getEventName('click'), self.navigationClick, self);
             });
         }
 
@@ -940,14 +942,14 @@ var MbeSlider = (function () {
      */
     MbeSlider.prototype.unbindEvents = function () {
 
-        this.element.mbeUnbindEvent(this.getEventName('start'), this.mouseDown, this);
-        document.mbeUnbindEvent(this.getEventName('move'), this.mouseMove, this);
-        document.mbeUnbindEvent(this.getEventName('end'), this.mouseUp, this);
-        this.element.mbeUnbindEvent(this.getEventName('click'), this.click, this);
-        window.mbeUnbindEvent(['resize'], this.resize, this);
+        mbeHelper.unbindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
+        mbeHelper.unbindEvent(document, this.getEventName('move'), this.mouseMove, this);
+        mbeHelper.unbindEvent(document, this.getEventName('end'), this.mouseUp, this);
+        mbeHelper.unbindEvent(this.element, this.getEventName('click'), this.click, this);
+        mbeHelper.unbindEvent(window, ['resize'], this.resize, this);
 
         if (this.options.navigation && this.options.navigation.keys) {
-            window.mbeUnbindEvent(['keydown'], this.keyDown, this);
+            mbeHelper.unbindEvent(window, ['keydown'], this.keyDown, this);
         }
 
         this.bindedEvents = false;
@@ -978,7 +980,7 @@ var MbeSlider = (function () {
         return events[type] || undefined;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;(function (MbeSlider, mbeHelper) {
 
     'use strict';
@@ -1033,7 +1035,7 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider, mbeHelper));
-;(function (MbeSlider) {
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -1043,7 +1045,7 @@ var MbeSlider = (function () {
      * @return string
      */
     MbeSlider.prototype.hide = function () {
-        this.element.parentNode.mbeSetStyle({
+        mbeHelper.setStyle(this.element.parentNode, {
             'display': 'none'
         });
     };
@@ -1054,7 +1056,7 @@ var MbeSlider = (function () {
      * @return string
      */
     MbeSlider.prototype.show = function () {
-        this.element.parentNode.mbeSetStyle({
+        mbeHelper.setStyle(this.element.parentNode, {
             'display': 'block'
         });
     };
@@ -1075,7 +1077,7 @@ var MbeSlider = (function () {
         return this._private.moved;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;(function (MbeSlider) {
 
     'use strict';
@@ -1327,7 +1329,7 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider, window));
-;(function (MbeSlider) {
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -1357,13 +1359,13 @@ var MbeSlider = (function () {
             slidesStyle = this.getSlidesStyle(),
             parentStyle = this.getParentStyle();
 
-        this.element.mbeSetStyle(elementStyle);
+        mbeHelper.setStyle(this.element, elementStyle);
 
         for (i = 0; i < this._private.slides.length; i++) {
-            this._private.slides[i].element.mbeSetStyle(slidesStyle);
+            mbeHelper.setStyle(this._private.slides[i].element, slidesStyle);
         }
 
-        this.element.parentNode.mbeSetStyle(parentStyle);
+        mbeHelper.setStyle(this.element.parentNode, parentStyle);
     };
 
     /**
@@ -1429,7 +1431,7 @@ var MbeSlider = (function () {
         this.setElement(this.options.element);
 
         // Remove the White Space
-        this.element.mbeRmoveWhiteSpace();
+        mbeHelper.removeWhiteSpace(this.element);
 
         //init the html
         this.initHtml();
@@ -1480,7 +1482,7 @@ var MbeSlider = (function () {
         return this;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;(function (MbeSlider) {
 
     'use strict';
@@ -1537,7 +1539,7 @@ var MbeSlider = (function () {
         this._private.position.x = mbeHelper.toNumber(x);
         this._private.position.y = mbeHelper.toNumber(y);
 
-        this.element.mbeSetStyle({
+        mbeHelper.setStyle(this.element, {
             '-webkit-transform': 'translate(' + x + 'px, ' + y + 'px)',
             '-moz-transform': 'translate(' + x + 'px, ' + y + 'px)',
             '-o-transform': 'translate(' + x + 'px, ' + y + 'px)',
@@ -1548,7 +1550,7 @@ var MbeSlider = (function () {
     };
 
 }(MbeSlider, mbeHelper));
-;(function (MbeSlider) {
+;(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -1567,14 +1569,14 @@ var MbeSlider = (function () {
         var arrowBack = document.createElement('a');
         arrowBack.classList.add('mbe-arrow-back');
         arrowBack.setAttribute('href', '#go-back');
-        arrowBack.mbeBindEvent(this.getEventName('click'), this.arrowBackClick, this);
+        mbeHelper.bindEvent(arrowBack, this.getEventName('click'), this.arrowBackClick, this);
 
 
         //setup the forward arrow
         var arrowForward = document.createElement('a');
         arrowForward.classList.add('mbe-arrow-forward');
         arrowForward.setAttribute('href', '#go-forward');
-        arrowForward.mbeBindEvent(this.getEventName('click'), this.arrowForwardClick, this);
+        mbeHelper.bindEvent(arrowForward, this.getEventName('click'), this.arrowForwardClick, this);
 
         //setup the container for the arrows
         var navigation = document.createElement('div');
@@ -1645,7 +1647,7 @@ var MbeSlider = (function () {
         }
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));
 ;(function (MbeSlider) {
 
     'use strict';

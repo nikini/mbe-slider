@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -14,7 +14,7 @@
 
         if (duration > 0) {
 
-            this.element.mbeSetStyle({
+            mbeHelper.setStyle(this.element, {
                 '-webkit-transform-style': 'preserve-3d',
                 '-webkit-backface-visibility': 'hidden',
                 '-webkit-perspective': 1000,
@@ -39,8 +39,8 @@
             });
         } else {
 
-            this.element.mbeRemoveStyle(['-webkit-transition-property', '-moz-transition-property', '-o-transition-property', '-ms-transition-property', 'transition-property', '-webkit-transition-duration', '-moz-transition-duration', '-o-transition-duration', '-ms-transition-duration', 'transition-duration', '-webkit-transition-timing-function', '-moz-transition-timing-function', '-o-transition-timing-function', '-ms-transition-timing-function', 'transition-timing-function']);
+            mbeHelper.removeStyle(this.element, ['-webkit-transition-property', '-moz-transition-property', '-o-transition-property', '-ms-transition-property', 'transition-property', '-webkit-transition-duration', '-moz-transition-duration', '-o-transition-duration', '-ms-transition-duration', 'transition-duration', '-webkit-transition-timing-function', '-moz-transition-timing-function', '-o-transition-timing-function', '-ms-transition-timing-function', 'transition-timing-function']);
         }
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));

@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -8,7 +8,7 @@
      * @return string
      */
     MbeSlider.prototype.hide = function () {
-        this.element.parentNode.mbeSetStyle({
+        mbeHelper.setStyle(this.element.parentNode, {
             'display': 'none'
         });
     };
@@ -19,7 +19,7 @@
      * @return string
      */
     MbeSlider.prototype.show = function () {
-        this.element.parentNode.mbeSetStyle({
+        mbeHelper.setStyle(this.element.parentNode, {
             'display': 'block'
         });
     };
@@ -40,4 +40,4 @@
         return this._private.moved;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));

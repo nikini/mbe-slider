@@ -1,17 +1,18 @@
-(function () {
+(function (mbeHelper) {
 
     'use strict';
 
     /**
      * Set CSS for an element
      *
+     * @param  Node element
      * @param  Object obj
      *
      * @return void
      */
-    Node.prototype.mbeSetStyle = function (obj) {
+    mbeHelper.setStyle = function (element, obj) {
         var i;
-        var styleObject = this.style;
+        var styleObject = element.style;
 
         for (i in obj) {
             if (obj.hasOwnProperty(i)) {
@@ -29,28 +30,30 @@
     /**
      * Remove the CSS from an element
      *
+     * @param  Node element
      * @param  array obj
      *
      * @return void
      */
-    Node.prototype.mbeRemoveStyle = function (obj) {
+    mbeHelper.removeStyle = function (element, obj) {
         var i;
 
         for (i = 0; i < obj.length; i++) {
-            this.mbeRemoveSingleStyle(obj[i]);
+            mbeHelper.removeSingleStyle(element, obj[i]);
         }
     };
 
     /**
      * Remove the single CSS from an element
      *
+     * @param  Node element
      * @param  array obj
      *
      * @return void
      */
-    Node.prototype.mbeRemoveSingleStyle = function (property) {
+    mbeHelper.removeSingleStyle = function (element, property) {
 
-        this.style.removeProperty(property);
+        element.style.removeProperty(property);
     };
 
-}());
+}(mbeHelper));

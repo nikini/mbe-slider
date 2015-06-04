@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -17,14 +17,14 @@
         var arrowBack = document.createElement('a');
         arrowBack.classList.add('mbe-arrow-back');
         arrowBack.setAttribute('href', '#go-back');
-        arrowBack.mbeBindEvent(this.getEventName('click'), this.arrowBackClick, this);
+        mbeHelper.bindEvent(arrowBack, this.getEventName('click'), this.arrowBackClick, this);
 
 
         //setup the forward arrow
         var arrowForward = document.createElement('a');
         arrowForward.classList.add('mbe-arrow-forward');
         arrowForward.setAttribute('href', '#go-forward');
-        arrowForward.mbeBindEvent(this.getEventName('click'), this.arrowForwardClick, this);
+        mbeHelper.bindEvent(arrowForward, this.getEventName('click'), this.arrowForwardClick, this);
 
         //setup the container for the arrows
         var navigation = document.createElement('div');
@@ -95,4 +95,4 @@
         }
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));

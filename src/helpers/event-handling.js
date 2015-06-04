@@ -5,28 +5,29 @@
     /**
      * Bind an event to an object
      *
+     * @param  Node element
      * @param  array events
      * @param  function func
      * @param  object thisValue
      *
      * @return
      */
-    Node.prototype.mbeBindEvent = function (events, func, thisValue) {
+    mbeHelper.bindEvent = function (element, events, func, thisValue) {
 
         if (!events) {
-            mbeHelper.throwError('Cannot attach event with empty name', 'mbeBindEvent', this);
+            mbeHelper.throwError('Cannot attach event with empty name', 'bindEvent', element);
             return;
         }
 
         if (!func) {
-            mbeHelper.throwError('Function for the event does not exist', 'mbeBindEvent', this);
+            mbeHelper.throwError('Function for the event does not exist', 'bindEvent', element);
             return;
         }
 
         var usedFunction = func.bind(thisValue);
 
-        if (!this.bindedEvents) {
-            this.bindedEvents = {};
+        if (!element.bindedEvents) {
+            element.bindedEvents = {};
         }
 
         events.forEach(function (event) {
@@ -41,28 +42,28 @@
             } else {
                 this.attachEvent('on' + event, usedFunction);
             }
-        }, this);
+        }, element);
     };
-    Window.prototype.mbeBindEvent = Node.prototype.mbeBindEvent;
 
     /**
      * Unbind an event from an object
      *
+     * @param  Node element
      * @param  array events
      * @param  function func
      * @param  object thisValue
      *
      * @return
      */
-    Node.prototype.mbeUnbindEvent = function (events, func, thisValue) {
+    mbeHelper.unbindEvent = function (element, events, func, thisValue) {
 
         if (!events) {
-            mbeHelper.throwError('Cannot dettach event with empty name', 'mbeUnbindEvent', this);
+            mbeHelper.throwError('Cannot dettach event with empty name', 'unbindEvent', element);
             return;
         }
 
         if (!func) {
-            mbeHelper.throwError('Function for the event dettachment does not exist', 'mbeUnbindEvent', this);
+            mbeHelper.throwError('Function for the event dettachment does not exist', 'unbindEvent', element);
             return;
         }
 
@@ -85,8 +86,7 @@
             } else {
                 this.attachEvent('on' + event, func.bind(thisValue));
             }
-        }, this);
+        }, element);
     };
-    Window.prototype.mbeUnbindEvent = Node.prototype.mbeUnbindEvent;
 
 }(mbeHelper));

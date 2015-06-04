@@ -21,7 +21,7 @@
         this._private.position.x = mbeHelper.toNumber(x);
         this._private.position.y = mbeHelper.toNumber(y);
 
-        this.element.mbeSetStyle({
+        mbeHelper.setStyle(this.element, {
             '-webkit-transform': 'translate(' + x + 'px, ' + y + 'px)',
             '-moz-transform': 'translate(' + x + 'px, ' + y + 'px)',
             '-o-transform': 'translate(' + x + 'px, ' + y + 'px)',

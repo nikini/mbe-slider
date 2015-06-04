@@ -1,4 +1,4 @@
-(function (MbeSlider) {
+(function (MbeSlider, mbeHelper) {
 
     'use strict';
 
@@ -28,13 +28,13 @@
             slidesStyle = this.getSlidesStyle(),
             parentStyle = this.getParentStyle();
 
-        this.element.mbeSetStyle(elementStyle);
+        mbeHelper.setStyle(this.element, elementStyle);
 
         for (i = 0; i < this._private.slides.length; i++) {
-            this._private.slides[i].element.mbeSetStyle(slidesStyle);
+            mbeHelper.setStyle(this._private.slides[i].element, slidesStyle);
         }
 
-        this.element.parentNode.mbeSetStyle(parentStyle);
+        mbeHelper.setStyle(this.element.parentNode, parentStyle);
     };
 
     /**
@@ -100,7 +100,7 @@
         this.setElement(this.options.element);
 
         // Remove the White Space
-        this.element.mbeRmoveWhiteSpace();
+        mbeHelper.removeWhiteSpace(this.element);
 
         //init the html
         this.initHtml();
@@ -151,4 +151,4 @@
         return this;
     };
 
-}(MbeSlider));
+}(MbeSlider, mbeHelper));

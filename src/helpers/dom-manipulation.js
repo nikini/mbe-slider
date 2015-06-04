@@ -1,23 +1,22 @@
-(function () {
+(function (mbeHelper) {
 
     'use strict';
 
     /**
      * Remove white space between tags
      *
-     * @param  string type
-     * @param  function func
+     * @param  Node element
      *
      * @return
      */
-    Node.prototype.mbeRmoveWhiteSpace = function () {
+    mbeHelper.removeWhiteSpace = function (element) {
         var i, node;
-        for (i = 0; i < this.childNodes.length; i++) {
-            node = this.childNodes[i];
+        for (i = 0; i < element.childNodes.length; i++) {
+            node = element.childNodes[i];
             if (node.nodeType === 3 && !/\S/.test(node.nodeValue)) {
-                this.removeChild(node);
+                element.removeChild(node);
             }
         }
     };
 
-}());
+}(mbeHelper));
