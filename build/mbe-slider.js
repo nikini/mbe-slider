@@ -131,11 +131,11 @@ var MbeSlider = (function () {
     'use strict';
 
 
-    if (Node.prototype.hasOwnProperty('classList')) {
+    if (Element.prototype.hasOwnProperty('classList')) {
         return;
     }
 
-    Object.defineProperty(Node.prototype, 'classList', {
+    Object.defineProperty(Element.prototype, 'classList', {
         get: function () {
 
             //get the class
