@@ -1,37 +1,30 @@
-(function (MbeSlider) {
+import Slider from '../slider';
 
-    'use strict';
+/**
+ * Get the current axe
+ *
+ * @return {string}
+ */
+Slider.prototype.getCurrentAxe = function getCurrentAxe() {
+    return this.options.direction === 'horizontal' ? 'x' : 'y';
+};
 
-    /**
-     * Get the current axe
-     *
-     * @return void
-     */
-    MbeSlider.prototype.getCurrentAxe = function () {
-        return this.options.direction === 'horizontal' ? 'x' : 'y';
-    };
+/**
+ * Get the current slide index
+ *
+ * @return {number}
+ */
+Slider.prototype.getCurrentSlideIndex = function getCurrentSlideIndex() {
+    const axe = this.getCurrentAxe();
+    return this._private.currentSlide[axe];
+};
 
-    /**
-     * Get the current slide index
-     *
-     * @return void
-     */
-    MbeSlider.prototype.getCurrentSlideIndex = function () {
-        var axe = this.getCurrentAxe();
-        var index = this._private.currentSlide[axe];
-
-        return index;
-    };
-
-    /**
-     * Get the current slide
-     *
-     * @return void
-     */
-    MbeSlider.prototype.getCurrentSlide = function () {
-        var index = this.getCurrentSlideIndex();
-
-        return this._private.slides[index - 1];
-    };
-
-}(MbeSlider));
+/**
+ * Get the current slide
+ *
+ * @return {Slide}
+ */
+Slider.prototype.getCurrentSlide = function getCurrentSlide() {
+    const index = this.getCurrentSlideIndex();
+    return this._private.slides[index - 1];
+};

@@ -1,17 +1,10 @@
-(function (MbeSlider) {
+import Slider from '../slider';
 
-    'use strict';
-
-    /**
-     * Refreshes the slider slides
-     *
-     * @return string
-     */
-    MbeSlider.prototype.refreshSlides = function () {
-
-        this.destroyStyle();
-        this.setSlides();
-        this.initStyle();
-    };
-
-}(MbeSlider));
+/**
+ * Refreshes the slider slides
+ */
+Slider.prototype.refreshSlides = function refreshSlides() {
+    this.destroyStyle();
+    this.setSlides();
+    this.initStyle();
+};

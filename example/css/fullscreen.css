@@ -21,7 +21,7 @@ body {
 	overflow: hidden;
 	height: 320px;
 }
-.mbe-slider,
+.cip-slider,
 body,
 html,
 ul {
@@ -78,10 +78,10 @@ ul li .notice p:last-child {
 	margin-bottom: 0;
 }
 
-div.mbe-slider {
+div.cip-slider {
 	position: relative;
 }
-div.mbe-slider .mbe-slider-navigation {
+div.cip-slider .cip-slider-navigation {
 	width: 100%;
 	text-align: center;
 
@@ -89,7 +89,7 @@ div.mbe-slider .mbe-slider-navigation {
 	left: 0;
 	bottom: 3%;
 }
-div.mbe-slider .mbe-slider-navigation .mbe-slider-navigation-item {
+div.cip-slider .cip-slider-navigation .cip-slider-navigation-item {
 	display: inline-block;
 	width: 5px;
 	height: 5px;
@@ -102,7 +102,7 @@ div.mbe-slider .mbe-slider-navigation .mbe-slider-navigation-item {
 
 	margin-left: 5px;
 }
-div.mbe-slider .mbe-slider-navigation .mbe-slider-navigation-item.mbe-slider-navigation-item-selected,
-div.mbe-slider .mbe-slider-navigation .mbe-slider-navigation-item:hover {
+div.cip-slider .cip-slider-navigation .cip-slider-navigation-item.cip-slider-navigation-item-selected,
+div.cip-slider .cip-slider-navigation .cip-slider-navigation-item:hover {
 	background: #444444;
 }

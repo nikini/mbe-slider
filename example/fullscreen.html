@@ -6,9 +6,9 @@
 		<meta charset="utf-8"/>
 		<meta http-equiv="content-language" content="en" />
 
-		<title>Fullscreen - JS MbeSlider - JS Photo and HTML Slider for Your Mobile Needs</title>
+		<title>Fullscreen - JS CipSlider - JS Photo and HTML Slider for Your Mobile Needs</title>
 
-		<meta name="description" content="mbe slider, javascript slider, html slider, fullscreen html slider" />
+		<meta name="description" content="mbe slider, cip slider, javascript slider, html slider, fullscreen html slider" />
 
 		<meta name="viewport" content="width=device-width" />
 
@@ -32,7 +32,7 @@
 			<li style="background: #D9A443">
 
 				<article class="notice">
-					<h1>mbe slider</h1>
+					<h1>Cip Slider</h1>
 					<p>This is a fullscreen slider made only in Javascript. This slider took <span class="duration"></span> milliseconds to initialize.</p>
 					<p><a class="btn" href="https://github.com/nikini/mbe-slider">View on GitHub</a></p>
 				</article> <!-- .notice -->
@@ -42,28 +42,24 @@
 			<li style="background: #A6662E">&nbsp;</li>
 			<li style="background: #733924">&nbsp;</li>
 			<li style="background: #BF4B21">&nbsp;</li>
-
 		</ul> <!-- .mobileScroller -->
 
 		<!-- Javascript -->
-		<script src="../build/mbe-slider.min.js"></script>
+		<script src="../build/main.bundle.js"></script>
 		<script>
 			window.onload = function () {
 
-				var timeStart = Date.now();
-				window.mSlider = new MbeSlider({
+				var timeStart = performance.now();
+				window.mSlider = new window.CipSlider({
 					element: '.mobileScroller',
 					direction: 'horizontal',
 					neverSkip: true,
-					autoSlide: 3000,
+					autoSlide: false,
 					infinite: true
 				});
-				var timeEnd = Date.now();
+				var timeEnd = performance.now();
 
-				var durationObj = document.querySelectorAll('.notice .duration');
-				Array.prototype.forEach.call(durationObj, function (element) {
-					element.innerHTML = timeEnd - timeStart;
-				});
+				document.querySelector('.notice .duration').innerHTML = (timeEnd - timeStart).toFixed(2);
 			}
 		</script>
 		<!-- /Javascript -->

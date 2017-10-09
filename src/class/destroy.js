@@ -1,68 +1,49 @@
-(function (MbeSlider, mbeHelper) {
+import Slider from '../slider';
 
-    'use strict';
+/**
+ * Destroy the slider style
+ */
+Slider.prototype.destroyStyle = function destroyStyle() {
+    const elementStyle = this.getElementStyle();
+    Object.keys(elementStyle).forEach((property) => {
+        this.element.style.removeProperty(property);
+    });
 
-    /**
-     * Init the CSS Function
-     *
-     * @return void
-     */
-    MbeSlider.prototype.destroyStyle = function () {
-        var i, j,
-            elementStyle = this.getElementStyle(),
-            slidesStyle = this.getSlidesStyle(),
-            parentStyle = this.getParentStyle();
+    const slidesStyle = this.getSlidesStyle();
+    Object.keys(slidesStyle).forEach((property) => {
+        this._private.slides.forEach((slide) => {
+            slide.style.removeProperty(property);
+        });
+    });
 
-        for (i in elementStyle) {
-            if (elementStyle.hasOwnProperty(i)) {
-                mbeHelper.removeSingleStyle(this.element, i);
-            }
-        }
+    const parentStyle = this.getParentStyle();
+    Object.keys(parentStyle).forEach((property) => {
+        this.element.parentNode.style.removeProperty(property);
+    });
+};
 
-        for (i in slidesStyle) {
-            if (slidesStyle.hasOwnProperty(i)) {
-                for (j = 0; j < this._private.slides.length; j++) {
-                    mbeHelper.removeSingleStyle(this._private.slides[j].element, i);
-                }
-            }
-        }
+/**
+ * Destroy the slider HTML
+ */
+Slider.prototype.destroyHtml = function destroyHtml() {
+    if (!this.element.parentNode.classList.contains('cip-slider')) {
+        return;
+    }
 
-        for (i in parentStyle) {
-            if (parentStyle.hasOwnProperty(i)) {
-                mbeHelper.removeSingleStyle(this.element.parentNode, i);
-            }
-        }
-    };
+    const parentNode = this.element.parentNode;
+    parentNode.parentNode.insertBefore(this.element, parentNode);
+    parentNode.parentNode.removeChild(parentNode);
+};
 
-    /**
-     * Destroy the Slider HTML Function
-     *
-     * @return void
-     */
-    MbeSlider.prototype.destroyHtml = function () {
-        if (!this.element.parentNode.classList.contains('mbe-slider')) {
-            return;
-        }
+/**
+ * Destroy the slider
+ */
+Slider.prototype.destroy = function destroy() {
+    console.time(`destroy #${this.options.id}`);
 
-        var parentNode = this.element.parentNode;
-        parentNode.parentNode.insertBefore(this.element, parentNode);
-        parentNode.parentNode.removeChild(parentNode);
-    };
+    this.destroyStyle();
+    this.unbindEvents();
+    this.destroyHtml();
 
-    /**
-     * Destroy the slider
-     *
-     * @return void
-     */
-    MbeSlider.prototype.destroy = function () {
-
-        console.time('destroy #' + this.options.id);
-
-        this.destroyStyle();
-        this.unbindEvents();
-        this.destroyHtml();
-
-        console.timeEnd('destroy #' + this.options.id);
-    };
-
-}(MbeSlider, mbeHelper));
+    console.timeEnd(`destroy #${this.options.id}`);
+};

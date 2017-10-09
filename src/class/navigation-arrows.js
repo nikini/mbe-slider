@@ -1,98 +1,82 @@
-(function (MbeSlider, mbeHelper) {
+import Slider from '../slider';
+import eventor from '../helpers/eventor';
 
-    'use strict';
+/**
+ * Append the arrows
+ *
+ * @return void
+ */
+Slider.prototype.appendArrows = function appendArrows() {
+    if (!(this.options.navigation && this.options.navigation.arrows)) {
+        return;
+    }
 
-    /**
-     * Append the arrows
-     *
-     * @return void
-     */
-    MbeSlider.prototype.appendArrows = function () {
-
-        if (!(this.options.navigation && this.options.navigation.arrows)) {
-            return;
-        }
-
-        //setup the back arrow
-        var arrowBack = document.createElement('a');
-        arrowBack.classList.add('mbe-arrow-back');
-        arrowBack.setAttribute('href', '#go-back');
-        mbeHelper.bindEvent(arrowBack, this.getEventName('click'), this.arrowBackClick, this);
+    // Setup the back arrow
+    const arrowBack = document.createElement('a');
+    arrowBack.classList.add('cip-arrow-back');
+    arrowBack.setAttribute('href', '#go-back');
+    eventor.bine(arrowBack, this.getEventName('click'), this.arrowBackClick, this);
 
 
-        //setup the forward arrow
-        var arrowForward = document.createElement('a');
-        arrowForward.classList.add('mbe-arrow-forward');
-        arrowForward.setAttribute('href', '#go-forward');
-        mbeHelper.bindEvent(arrowForward, this.getEventName('click'), this.arrowForwardClick, this);
+    // Setup the forward arrow
+    const arrowForward = document.createElement('a');
+    arrowForward.classList.add('cip-arrow-forward');
+    arrowForward.setAttribute('href', '#go-forward');
+    eventor.bine(arrowForward, this.getEventName('click'), this.arrowForwardClick, this);
 
-        //setup the container for the arrows
-        var navigation = document.createElement('div');
-        navigation.classList.add('mbe-navigation-arrows');
-        navigation.appendChild(arrowBack);
-        navigation.appendChild(arrowForward);
+    // Setup the container for the arrows
+    const navigation = document.createElement('div');
+    navigation.classList.add('cip-navigation-arrows');
+    navigation.appendChild(arrowBack);
+    navigation.appendChild(arrowForward);
 
-        //append everything to the parent
-        this.element.parentNode.appendChild(navigation);
+    // Append everything to the parent
+    this.element.parentNode.appendChild(navigation);
 
-        //set the navigation arrows
-        this.setNavigationArrows();
-    };
+    // Set the navigation arrows
+    this.setNavigationArrows();
+};
 
+/**
+ * Go Back arrow click
+ *
+ * @param {Event} event
+ */
+Slider.prototype.arrowBackClick = function arrowBackClick(event) {
+    event.preventDefault();
+    this.gotoPreviousSlide(true);
+};
 
-    /**
-     * Go Back arrow click
-     *
-     * @return void
-     */
-    MbeSlider.prototype.arrowBackClick = function (e) {
+/**
+ * Go Forward arrow click
+ *
+ * @param {Event} event
+ */
+Slider.prototype.arrowForwardClick = function arrowForwardClick(event) {
+    event.preventDefault();
+    this.gotoNextSlide(true);
+};
 
-        e.preventDefault();
+/**
+ * Set the navigation arrows
+ */
+Slider.prototype.setNavigationArrows = function setNavigationArrows() {
+    if (!(this.options.navigation && this.options.navigation.arrows)) {
+        return;
+    }
+    const currentSlide = this.getCurrentSlideIndex();
 
-        this.gotoPreviousSlide(true);
-    };
+    const arrowBack = this.element.parentNode.querySelector('.cip-arrow-back');
+    if (currentSlide <= 1) { // First
+        arrowBack.classList.add('hidden');
+    } else {
+        arrowBack.classList.remove('hidden');
+    }
 
-
-    /**
-     * Go Forward arrow click
-     *
-     * @return void
-     */
-    MbeSlider.prototype.arrowForwardClick = function (e) {
-
-        e.preventDefault();
-
-        this.gotoNextSlide(true);
-    };
-
-
-    /**
-     * Set the navigation arrows
-     *
-     * @return void
-     */
-    MbeSlider.prototype.setNavigationArrows = function () {
-
-        if (!(this.options.navigation && this.options.navigation.arrows)) {
-            return;
-        }
-
-        var
-            currentSlide = this.getCurrentSlideIndex(),
-            arrowBack = this.element.parentNode.querySelector('.mbe-arrow-back'),
-            arrowForward = this.element.parentNode.querySelector('.mbe-arrow-forward');
-
-        if (currentSlide <= 1) { //first
-            arrowBack.classList.add('hidden');
-        } else {
-            arrowBack.classList.remove('hidden');
-        }
-
-        if (currentSlide >= this._private.maxSlides) { //last
-            arrowForward.classList.add('hidden');
-        } else {
-            arrowForward.classList.remove('hidden');
-        }
-    };
-
-}(MbeSlider, mbeHelper));
+    const arrowForward = this.element.parentNode.querySelector('.cip-arrow-forward');
+    if (currentSlide >= this._private.maxSlides) { // Last
+        arrowForward.classList.add('hidden');
+    } else {
+        arrowForward.classList.remove('hidden');
+    }
+};

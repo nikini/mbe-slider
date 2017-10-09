@@ -1,84 +1,71 @@
-(function (MbeSlider, mbeHelper) {
+import Slider from '../slider';
+import eventor from '../helpers/eventor';
 
-    'use strict';
+/**
+ * Bind all the events of the slider
+ */
+Slider.prototype.bindEvents = function bindEvents() {
+    if (this.bindedEvents) {
+        return;
+    }
 
-    /**
-     * Bind all the events of the slider
-     *
-     * @return void
-     */
-    MbeSlider.prototype.bindEvents = function () {
+    eventor.bind(this.element, this.getEventName('start'), this.mouseDown, this);
+    eventor.bind(document, this.getEventName('move'), this.mouseMove, this);
+    eventor.bind(document, this.getEventName('end'), this.mouseUp, this);
+    eventor.bind(this.element, this.getEventName('click'), this.click, this);
+    eventor.bind(window, ['resize'], this.resize, this);
 
-        if (this.bindedEvents) {
-            return;
-        }
+    if (this.options.navigation && this.options.navigation.keys) {
+        eventor.bind(window, ['keydown'], this.keyDown, this);
+    }
 
-        mbeHelper.bindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
-        mbeHelper.bindEvent(document, this.getEventName('move'), this.mouseMove, this);
-        mbeHelper.bindEvent(document, this.getEventName('end'), this.mouseUp, this);
-        mbeHelper.bindEvent(this.element, this.getEventName('click'), this.click, this);
-        mbeHelper.bindEvent(window, ['resize'], this.resize, this);
+    if (this.options.navigation && this.options.navigation.type && this.options.navigation.clickable) {
+        const nodes = this.element.parentNode.querySelector(`.${this.options.navigation.className}`).children;
+        Array.prototype.forEach.call(nodes, (element) => {
+            eventor.bind(element, this.getEventName('click'), this.navigationClick, this);
+        });
+    }
 
-        if (this.options.navigation && this.options.navigation.keys) {
-            mbeHelper.bindEvent(window, ['keydown'], this.keyDown, this);
-        }
+    this.bindedEvents = true;
+};
 
-        if (this.options.navigation && this.options.navigation.type && this.options.navigation.clickable) {
+/**
+ * Unbind all the events from the slider
+ */
+Slider.prototype.unbindEvents = function unbindEvents() {
+    eventor.unbind(this.element, this.getEventName('start'));
+    eventor.unbind(document, this.getEventName('move'));
+    eventor.unbind(document, this.getEventName('end'));
+    eventor.unbind(this.element, this.getEventName('click'));
+    eventor.unbind(window, ['resize']);
 
-            var self = this;
+    if (this.options.navigation && this.options.navigation.keys) {
+        eventor.unbind(window, ['keydown']);
+    }
 
-            Array.prototype.forEach.call(this.element.parentNode.querySelector('.' + this.options.navigation.className).childNodes, function (element) {
+    this.bindedEvents = false;
+};
 
-                mbeHelper.bindEvent(element, self.getEventName('click'), self.navigationClick, self);
-            });
-        }
-
-        this.bindedEvents = true;
+/**
+ * Get the name of the event based on the options and everything
+ *
+ * @param  {string} type
+ *
+ * @return {Array}
+ */
+Slider.prototype.getEventName = function getEventName(type) {
+    const events = {
+        start: ['touchstart'],
+        move: ['touchmove'],
+        end: ['touchend'],
+        click: ['click'],
     };
 
-    /**
-     * Unbind all the events from the slider
-     *
-     * @return void
-     */
-    MbeSlider.prototype.unbindEvents = function () {
+    if (this.options.navigation && this.options.navigation.drag) {
+        events.start.push('mousedown');
+        events.move.push('mousemove');
+        events.end.push('mouseup');
+    }
 
-        mbeHelper.unbindEvent(this.element, this.getEventName('start'), this.mouseDown, this);
-        mbeHelper.unbindEvent(document, this.getEventName('move'), this.mouseMove, this);
-        mbeHelper.unbindEvent(document, this.getEventName('end'), this.mouseUp, this);
-        mbeHelper.unbindEvent(this.element, this.getEventName('click'), this.click, this);
-        mbeHelper.unbindEvent(window, ['resize'], this.resize, this);
-
-        if (this.options.navigation && this.options.navigation.keys) {
-            mbeHelper.unbindEvent(window, ['keydown'], this.keyDown, this);
-        }
-
-        this.bindedEvents = false;
-    };
-
-    /**
-     * Get the name of the event based on the options and everything
-     *
-     * @param type String
-     *
-     * @return function
-     */
-    MbeSlider.prototype.getEventName = function (type) {
-
-        var events = {
-            'start': ['touchstart'],
-            'move': ['touchmove'],
-            'end': ['touchend'],
-            'click': ['click']
-        };
-
-        if (this.options.navigation && this.options.navigation.drag) {
-            events.start.push('mousedown');
-            events.move.push('mousemove');
-            events.end.push('mouseup');
-        }
-
-        return events[type] || undefined;
-    };
-
-}(MbeSlider, mbeHelper));
+    return events[type] || [];
+};
